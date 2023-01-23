@@ -18,12 +18,11 @@ namespace AutoBattle
             Console.WriteLine("The battle field has been created\n");
             for (int i = 0; i < Lines; i++)
             {
-                 grids.Add(newBox);
-                for (int j = 0; j < Columns; j++)
+                for(int j = 0; j < Columns; j++)
                 {
                     GridBox newBox = new GridBox(j, i, false, (Columns * i + j));
                     Console.Write($"{newBox.Index}\n");
-                    
+                    grids.Add(newBox);
                 }
             }
         }
@@ -38,7 +37,6 @@ namespace AutoBattle
                     GridBox currentgrid = new GridBox();
                     if (currentgrid.ocupied)
                     {
-                        //if()
                         Console.Write("[X]\t");
                     }
                     else
