@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using static AutoBattle.Types;
 using AutoBattle.Abilities;
+using AutoBattle.Effects;
 
 namespace AutoBattle.Characters
 {
@@ -18,6 +19,7 @@ namespace AutoBattle.Characters
         public GridBox CurrentBox { get; protected set; }
         public Character Target { get; protected set; }
         public ISpecialAbility SpecialAbility { get; protected set; }
+        public List<IEffect> Effects { get; protected set; }
 
 
         public Character(string name, float health, float baseDamage, ISpecialAbility specialAbility)
@@ -27,6 +29,11 @@ namespace AutoBattle.Characters
             BaseDamage = baseDamage;
             SpecialAbility = specialAbility;
             IsDead = false;
+        }
+
+        public void AddEffect(IEffect effect) 
+        {
+            Effects.Add(effect);
         }
 
         public bool TakeDamage(float amount)
