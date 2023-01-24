@@ -5,6 +5,8 @@ using System.Linq;
 using static AutoBattle.Types;
 using AutoBattle.Abilities;
 using AutoBattle.Effects;
+using AutoBattle.Characters.Behaviours.AttackBehaviours;
+using AutoBattle.Characters.Behaviours.MoveBehaviours;
 
 namespace AutoBattle.Characters
 {
@@ -18,16 +20,23 @@ namespace AutoBattle.Characters
         public Action TurnAction { get; protected set; }
         public GridBox CurrentBox { get; protected set; }
         public Character Target { get; protected set; }
-        public ISpecialAbility SpecialAbility { get; protected set; }
+       
         public List<IEffect> Effects { get; protected set; }
 
+        protected ISpecialAbility specialAbility;
+        protected IAttackBehaviour attackBehaviour;
+        protected IMoveBehaviour moveBehaviour;
 
-        public Character(string name, float health, float baseDamage, ISpecialAbility specialAbility)
+        public Character(string name, float health, float baseDamage, ISpecialAbility specialAbility, IMoveBehaviour moveBehaviour, IAttackBehaviour attackBehaviour)
         {
             Name = name;
             Health = health;
             BaseDamage = baseDamage;
-            SpecialAbility = specialAbility;
+            
+            this.specialAbility = specialAbility;
+            this.attackBehaviour = attackBehaviour;
+            this.moveBehaviour = moveBehaviour;
+
             IsDead = false;
         }
 
@@ -53,9 +62,15 @@ namespace AutoBattle.Characters
             //TODO >> maybe kill him?
         }
 
-        public abstract void Move();
+        public void Move() 
+        {
+            moveBehaviour.Move(this);
+        }
 
-        public abstract void Attack();
+        public void Attack() 
+        {
+            attackBehaviour.Attack(this);
+        }
 
         public abstract void ChooseAction();
 
