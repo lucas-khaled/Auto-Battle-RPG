@@ -16,16 +16,16 @@ namespace AutoBattle.Characters
             switch (characterClass) 
             {
                 case CharacterClass.Paladin:
-                    // TODO: Call Paladin Constructor
+                    character = new Paladin(name);
                     break;
                 case CharacterClass.Warrior:
-                    // TODO: Call Warrior Constructor
+                    character = new Warrior(name);
                     break;
                 case CharacterClass.Cleric:
-                    // TODO: Call Cleric Constructor
+                    character = new Cleric(name);
                     break;
                 case CharacterClass.Archer:
-                    // TODO: Call Archer Constructor
+                    character = new Archer(name);
                     break;
             }
 

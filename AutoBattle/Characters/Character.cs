@@ -27,19 +27,6 @@ namespace AutoBattle.Characters
         protected IAttackBehaviour attackBehaviour;
         protected IMoveBehaviour moveBehaviour;
 
-        public Character(string name, float health, float baseDamage, ISpecialAbility specialAbility, IMoveBehaviour moveBehaviour, IAttackBehaviour attackBehaviour)
-        {
-            Name = name;
-            Health = health;
-            BaseDamage = baseDamage;
-            
-            this.specialAbility = specialAbility;
-            this.attackBehaviour = attackBehaviour;
-            this.moveBehaviour = moveBehaviour;
-
-            IsDead = false;
-        }
-
         public void AddEffect(IEffect effect) 
         {
             Effects.Add(effect);
@@ -80,6 +67,19 @@ namespace AutoBattle.Characters
         public abstract void ChooseAction();
 
         public abstract void DoAction();
+
+        protected void SetCharacterBasis(string name, float health, float baseDamage, ISpecialAbility specialAbility, IMoveBehaviour moveBehaviour, IAttackBehaviour attackBehaviour)
+        {
+            Name = name;
+            Health = health;
+            BaseDamage = baseDamage;
+
+            this.specialAbility = specialAbility;
+            this.attackBehaviour = attackBehaviour;
+            this.moveBehaviour = moveBehaviour;
+
+            IsDead = false;
+        }
 
 
         /*public void StartTurn(Grid battlefield)
