@@ -13,11 +13,11 @@ namespace AutoBattle.Characters
     public abstract class Character
     {
         public bool CanAct { get; set; }
+        public int BaseDamage { get; set; }
 
 
         public string Name { get; protected set; }
         public float Health { get; protected set; }
-        public float BaseDamage { get; protected set; }
         public bool IsDead { get; protected set; }
 
         public Action TurnAction { get; protected set; }
