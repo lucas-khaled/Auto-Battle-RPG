@@ -45,6 +45,11 @@ namespace AutoBattle.Characters
             Effects.Add(effect);
         }
 
+        public void ApplyEffects() 
+        {
+            Effects.ForEach(x => x.ApplyEffect(this));
+        }
+
         public bool TakeDamage(float amount)
         {
             Health -= amount;
