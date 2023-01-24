@@ -12,9 +12,9 @@ namespace AutoBattle.Effects
         private Vector2 damageRange;
         private Random random = new Random();
 
-        public Bleed(int turnsRemaining, Vector2 damageRange) 
+        public Bleed(int turns, Vector2 damageRange) 
         {
-            this.turnsRemaining = turnsRemaining;
+            this.turnsRemaining = turns;
             this.damageRange = damageRange;
         }
 
