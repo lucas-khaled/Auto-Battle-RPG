@@ -34,7 +34,7 @@ namespace AutoBattle.Characters
 
         public void ApplyEffects() 
         {
-            Effects.ForEach(x => x.ApplyEffect(this));
+            Effects.ForEach(x => ApplyEffect(x));
         }
 
         public bool TakeDamage(float amount)
@@ -79,6 +79,12 @@ namespace AutoBattle.Characters
             this.moveBehaviour = moveBehaviour;
 
             IsDead = false;
+        }
+
+        private void ApplyEffect(IEffect effect)
+        {
+            if(effect.ApplyEffect(this) is false) 
+                Effects.Remove(effect);
         }
 
 

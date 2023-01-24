@@ -7,6 +7,6 @@ namespace AutoBattle.Effects
 {
     public interface IEffect
     {
-        IEffect ApplyEffect(Character character);
+        bool ApplyEffect(Character character);
     }
 }
