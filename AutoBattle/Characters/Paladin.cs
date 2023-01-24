@@ -9,9 +9,9 @@ namespace AutoBattle.Characters
 {
     internal class Paladin : Character
     {
-        public Paladin(string name)
+        public Paladin(string name) : base(name)
         {
-            SetCharacterBasis(name, 200, 10, null, null, null);
+            SetCharacterBasis(200, 10, null, null, null);
         }
 
         public override void ChooseAction()

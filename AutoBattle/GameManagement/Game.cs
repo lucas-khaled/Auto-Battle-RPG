@@ -56,7 +56,7 @@ namespace AutoBattle.GameManagement
 
             var box = Grid.GetBoxInPosition(x, y);
 
-            if (box.ocupied) 
+            if (box.ocupiedBy != null) 
                 return GetRandomFreePosInGrid();
 
             return box;

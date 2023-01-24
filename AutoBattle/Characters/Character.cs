@@ -7,29 +7,33 @@ using AutoBattle.Abilities;
 using AutoBattle.Effects;
 using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
+using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
 
 namespace AutoBattle.Characters
 {
-    public abstract class Character
+    public abstract class Character : GridObject
     {
         public bool CanAct { get; set; }
         public int BaseDamage { get; set; }
         public bool Visible { get; set; }
 
+        public Character Target { get; set; }
 
-        public string Name { get; protected set; }
         public float Health { get; protected set; }
         public bool IsDead { get; protected set; }
 
         public Action TurnAction { get; protected set; }
-        public Character Target { get; protected set; }
+        
         public List<IEffect> Effects { get; protected set; }
 
         protected ISpecialAbility specialAbility;
         protected IAttackBehaviour attackBehaviour;
         protected IMoveBehaviour moveBehaviour;
+        protected ITargetFindBehaviour targetFindBehaviour;
 
-        protected GridBox CurrentBox;
+        protected Character(string name) : base(name)
+        {
+        }
 
         public void AddEffect(IEffect effect) 
         {
@@ -39,6 +43,11 @@ namespace AutoBattle.Characters
         public void ApplyEffects() 
         {
             Effects.ForEach(x => ApplyEffect(x));
+        }
+
+        public void FindTarget() 
+        {
+            targetFindBehaviour.FindTarget(this);
         }
 
         public bool TakeDamage(float amount)
@@ -74,30 +83,25 @@ namespace AutoBattle.Characters
 
             if (CanAct is false) return;
 
+            FindTarget();
             ChooseAction();
             DoAction();
-        }
-
-        public void SetCurrentPlace(GridBox box) 
-        {
-            CurrentBox.ocupied = false;
-            box.ocupied = true;
-            CurrentBox = box;
         }
 
         public abstract void ChooseAction();
 
         public abstract void DoAction();
 
-        protected void SetCharacterBasis(string name, float health, int baseDamage, ISpecialAbility specialAbility, IMoveBehaviour moveBehaviour, IAttackBehaviour attackBehaviour)
+        protected void SetCharacterBasis(float health, int baseDamage, ISpecialAbility specialAbility, 
+            IMoveBehaviour moveBehaviour, IAttackBehaviour attackBehaviour, ITargetFindBehaviour targetFindBehaviour)
         {
-            Name = name;
             Health = health;
             BaseDamage = baseDamage;
 
             this.specialAbility = specialAbility;
             this.attackBehaviour = attackBehaviour;
             this.moveBehaviour = moveBehaviour;
+            this.targetFindBehaviour = targetFindBehaviour;
 
             IsDead = false;
         }

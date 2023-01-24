@@ -6,9 +6,9 @@ namespace AutoBattle.Characters
 {
     internal class Archer : Character
     {
-        public Archer(string name)
+        public Archer(string name) : base(name)
         {
-            SetCharacterBasis(name, 100, 12, null, null, null);
+            SetCharacterBasis(100, 12, null, null, null);
         }
         public override void ChooseAction()
         {

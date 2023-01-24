@@ -157,10 +157,10 @@ namespace AutoBattle
                 int random = 0;
                 GridBox RandomLocation = (grid.boxes.ElementAt(random));
                 Console.Write($"{random}\n");
-                if (!RandomLocation.ocupied)
+                if (!RandomLocation.ocupiedBy)
                 {
                     GridBox PlayerCurrentLocation = RandomLocation;
-                    RandomLocation.ocupied = true;
+                    RandomLocation.ocupiedBy = true;
                     grid.boxes[random] = RandomLocation;
                     PlayerCharacter.currentBox = grid.boxes[random];
                     AlocateEnemyCharacter();
@@ -175,10 +175,10 @@ namespace AutoBattle
                 int random = 24;
                 GridBox RandomLocation = (grid.boxes.ElementAt(random));
                 Console.Write($"{random}\n");
-                if (!RandomLocation.ocupied)
+                if (!RandomLocation.ocupiedBy)
                 {
                     EnemyCurrentLocation = RandomLocation;
-                    RandomLocation.ocupied = true;
+                    RandomLocation.ocupiedBy = true;
                     grid.boxes[random] = RandomLocation;
                     EnemyCharacter.currentBox = grid.boxes[random];
                     grid.DrawBattlefield(5 , 5);

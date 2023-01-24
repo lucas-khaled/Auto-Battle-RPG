@@ -6,9 +6,9 @@ namespace AutoBattle.Characters
 {
     internal class Cleric : Character
     {
-        public Cleric(string name)
+        public Cleric(string name) : base(name)
         {
-            SetCharacterBasis(name, 200, 8, null, null, null);
+            SetCharacterBasis(200, 8, null, null, null);
         }
 
         public override void ChooseAction()

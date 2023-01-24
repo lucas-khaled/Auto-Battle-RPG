@@ -13,24 +13,22 @@ namespace AutoBattle
             float hpModifier;
             float ClassDamage;
             CharacterSkills[] skills;
-
         }
 
         public struct GridBox
         {
             public int xIndex;
             public int yIndex;
-            public bool ocupied;
+            public GridObject ocupiedBy;
             public int Index;
 
-            public GridBox(int x, int y, bool ocupied, int index)
+            public GridBox(int x, int y, GridObject ocupiedBy, int index)
             {
                 xIndex = x;
                 yIndex = y;
-                this.ocupied = ocupied;
+                this.ocupiedBy = ocupiedBy;
                 this.Index = index;
             }
-
         }
 
         public struct CharacterSkills
