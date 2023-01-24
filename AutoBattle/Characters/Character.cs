@@ -14,6 +14,7 @@ namespace AutoBattle.Characters
     {
         public bool CanAct { get; set; }
         public int BaseDamage { get; set; }
+        public bool Visible { get; set; }
 
 
         public string Name { get; protected set; }
