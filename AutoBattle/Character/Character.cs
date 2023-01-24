@@ -17,14 +17,15 @@ namespace AutoBattle.Characters
         public Action TurnAction { get; protected set; }
         public GridBox CurrentBox { get; protected set; }
         public Character Target { get; protected set; }
-        
+        public ISpecialAbility SpecialAbility { get; protected set; }
 
 
-        public Character(string name, float health, float baseDamage)
+        public Character(string name, float health, float baseDamage, ISpecialAbility specialAbility)
         {
             Name = name;
             Health = health;
             BaseDamage = baseDamage;
+            SpecialAbility = specialAbility;
             IsDead = false;
         }
 
