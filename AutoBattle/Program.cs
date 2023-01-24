@@ -1,9 +1,9 @@
 ﻿using System;
-using static AutoBattle.Character;
 using static AutoBattle.Grid;
 using System.Collections.Generic;
 using System.Linq;
 using static AutoBattle.Types;
+using AutoBattle.Characters;
 
 namespace AutoBattle
 {
@@ -17,7 +17,7 @@ namespace AutoBattle
             GridBox EnemyCurrentLocation;
             Character PlayerCharacter;
             Character EnemyCharacter;
-            List<Character> AllPlayers = new List<Character>();
+            List<Characters> AllPlayers = new List<Characters>();
             int currentTurn = 0;
             int numberOfPossibleTiles = grid.grids.Count;
             Setup(); 
