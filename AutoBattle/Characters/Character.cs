@@ -12,6 +12,9 @@ namespace AutoBattle.Characters
 {
     public abstract class Character
     {
+        public bool CanAct { get; set; }
+
+
         public string Name { get; protected set; }
         public float Health { get; protected set; }
         public float BaseDamage { get; protected set; }
@@ -62,6 +65,16 @@ namespace AutoBattle.Characters
         public void Attack() 
         {
             attackBehaviour.Attack(this);
+        }
+
+        public void DoTurn() 
+        {
+            ApplyEffects();
+
+            if (CanAct is false) return;
+
+            ChooseAction();
+            DoAction();
         }
 
         public abstract void ChooseAction();
