@@ -7,7 +7,7 @@ namespace AutoBattle.Effects
 {
     public class Heal : IEffect
     {
-        private bool applied = false;;
+        private bool applied = false;
         private int healAmount;
         public Heal(int healAmount)
         {
