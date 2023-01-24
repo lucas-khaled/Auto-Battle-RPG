@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using static AutoBattle.Types;
+using System.Drawing;
 
 namespace AutoBattle
 {
     public class Grid
     {
-        public List<GridBox> grids = new List<GridBox>();
+        public List<GridBox> boxes = new List<GridBox>();
         public int xLenght;
         public int yLength;
         public Grid(int Lines, int Columns)
@@ -22,9 +23,17 @@ namespace AutoBattle
                 {
                     GridBox newBox = new GridBox(j, i, false, (Columns * i + j));
                     Console.Write($"{newBox.Index}\n");
-                    grids.Add(newBox);
+                    boxes.Add(newBox);
                 }
             }
+        }
+
+        public GridBox GetBoxInPosition(int x, int y) 
+        {
+            int WrapX = ((x % xLenght) + xLenght) % xLenght;
+            int WrapY = ((y % yLength) + yLength) % yLength;
+            int index = yLength * WrapX + WrapY;
+            return boxes[index];
         }
 
         // prints the matrix that indicates the tiles of the battlefield

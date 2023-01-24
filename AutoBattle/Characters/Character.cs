@@ -22,14 +22,14 @@ namespace AutoBattle.Characters
         public bool IsDead { get; protected set; }
 
         public Action TurnAction { get; protected set; }
-        public GridBox CurrentBox { get; protected set; }
         public Character Target { get; protected set; }
-       
         public List<IEffect> Effects { get; protected set; }
 
         protected ISpecialAbility specialAbility;
         protected IAttackBehaviour attackBehaviour;
         protected IMoveBehaviour moveBehaviour;
+
+        protected GridBox CurrentBox;
 
         public void AddEffect(IEffect effect) 
         {
@@ -78,11 +78,18 @@ namespace AutoBattle.Characters
             DoAction();
         }
 
+        public void SetCurrentPlace(GridBox box) 
+        {
+            CurrentBox.ocupied = false;
+            box.ocupied = true;
+            CurrentBox = box;
+        }
+
         public abstract void ChooseAction();
 
         public abstract void DoAction();
 
-        protected void SetCharacterBasis(string name, float health, float baseDamage, ISpecialAbility specialAbility, IMoveBehaviour moveBehaviour, IAttackBehaviour attackBehaviour)
+        protected void SetCharacterBasis(string name, float health, int baseDamage, ISpecialAbility specialAbility, IMoveBehaviour moveBehaviour, IAttackBehaviour attackBehaviour)
         {
             Name = name;
             Health = health;

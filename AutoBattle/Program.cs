@@ -19,7 +19,7 @@ namespace AutoBattle
             Character EnemyCharacter;
             List<Characters> AllPlayers = new List<Characters>();
             int currentTurn = 0;
-            int numberOfPossibleTiles = grid.grids.Count;
+            int numberOfPossibleTiles = grid.boxes.Count;
             Setup(); 
 
 
@@ -155,14 +155,14 @@ namespace AutoBattle
             void AlocatePlayerCharacter()
             {
                 int random = 0;
-                GridBox RandomLocation = (grid.grids.ElementAt(random));
+                GridBox RandomLocation = (grid.boxes.ElementAt(random));
                 Console.Write($"{random}\n");
                 if (!RandomLocation.ocupied)
                 {
                     GridBox PlayerCurrentLocation = RandomLocation;
                     RandomLocation.ocupied = true;
-                    grid.grids[random] = RandomLocation;
-                    PlayerCharacter.currentBox = grid.grids[random];
+                    grid.boxes[random] = RandomLocation;
+                    PlayerCharacter.currentBox = grid.boxes[random];
                     AlocateEnemyCharacter();
                 } else
                 {
@@ -173,14 +173,14 @@ namespace AutoBattle
             void AlocateEnemyCharacter()
             {
                 int random = 24;
-                GridBox RandomLocation = (grid.grids.ElementAt(random));
+                GridBox RandomLocation = (grid.boxes.ElementAt(random));
                 Console.Write($"{random}\n");
                 if (!RandomLocation.ocupied)
                 {
                     EnemyCurrentLocation = RandomLocation;
                     RandomLocation.ocupied = true;
-                    grid.grids[random] = RandomLocation;
-                    EnemyCharacter.currentBox = grid.grids[random];
+                    grid.boxes[random] = RandomLocation;
+                    EnemyCharacter.currentBox = grid.boxes[random];
                     grid.DrawBattlefield(5 , 5);
                 }
                 else
