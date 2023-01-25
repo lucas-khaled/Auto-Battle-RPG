@@ -13,18 +13,13 @@ namespace AutoBattle.GameManagement
         {
             actualGame = new Game(grid, characters);
             actualGame.StartGame();
-            RunGame(actualGame);
+            RunTurns(actualGame);
         }
 
-        private static void RunGame(Game game) 
+        private static void RunTurns(Game game) 
         {
-            int turn = 1;
             while(game.HasEnded() is false) 
-            {
-                Console.WriteLine($"Turn {turn}");
                 game.RunTurn();
-                turn++;
-            }
         }
     }
 }
