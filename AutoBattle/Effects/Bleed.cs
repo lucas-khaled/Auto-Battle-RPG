@@ -24,6 +24,9 @@ namespace AutoBattle.Effects
                 return false;
 
             var damage = random.Next((int)damageRange.X, (int)damageRange.Y);
+
+            Console.WriteLine($" - {character.Name} bled and took {damage} of damage");
+
             character.TakeDamage(damage);
             turnsRemaining--;
 

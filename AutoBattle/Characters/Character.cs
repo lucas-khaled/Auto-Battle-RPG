@@ -40,12 +40,6 @@ namespace AutoBattle.Characters
             Effects.Add(effect);
         }
 
-        public void ApplyEffects() 
-        {
-            if(Effects.Count > 0)
-                Effects.ForEach(x => ApplyEffect(x));
-        }
-
         public void FindTarget() 
         {
             targetFindBehaviour?.FindTarget(this);
@@ -71,13 +65,13 @@ namespace AutoBattle.Characters
             //TODO >> maybe kill him?
         }
 
-        public void Move() 
+        public virtual void Move() 
         {
             moveBehaviour?.Move(this);
             Console.WriteLine($"{Name} moved to {currentBox.ToString()}");
         }
 
-        public void Attack() 
+        public virtual void Attack() 
         {
             attackBehaviour?.Attack(this);
         }
@@ -113,6 +107,12 @@ namespace AutoBattle.Characters
             this.targetFindBehaviour = targetFindBehaviour;
 
             IsDead = false;
+        }
+
+        private void ApplyEffects()
+        {
+            if (Effects.Count > 0)
+                Effects.ForEach(x => ApplyEffect(x));
         }
 
         private void ApplyEffect(IEffect effect)
