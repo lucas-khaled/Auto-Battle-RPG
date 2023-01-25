@@ -12,7 +12,7 @@ namespace AutoBattle.Characters.Behaviours.TargetFindBehaviour
         {
             var myBox = character.GetCurrentPlace();
             var closest = GameManager.actualGame.Grid.boxes
-                .Where(box => box.ocupiedBy is Character)
+                .Where(box => box.ocupiedBy is Character && box.ocupiedBy != character)
                 .OrderBy(box => Math.Abs(box.yIndex - myBox.yIndex) + Math.Abs(box.xIndex - box.xIndex))
                 .ToArray()[0];
 
