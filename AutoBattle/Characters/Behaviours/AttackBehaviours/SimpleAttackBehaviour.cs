@@ -23,7 +23,7 @@ namespace AutoBattle.Characters.Behaviours.AttackBehaviours
             var damage = random.Next(baseDamage - variation, baseDamage + variation + 1);
             var target = character.Target;
 
-            Console.WriteLine($"{character.Name} attacked {target.Name} with {damage} of damage!");
+            Console.WriteLine($" - {character.Name} attacked {target.Name} with {damage} of damage!");
             target.TakeDamage(damage);
         }
     }

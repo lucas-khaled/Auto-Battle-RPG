@@ -49,13 +49,12 @@ namespace AutoBattle.Characters
         public void FindTarget() 
         {
             targetFindBehaviour?.FindTarget(this);
-            Console.WriteLine(Name + " found target: " + Target.Name);
         }
 
         public bool TakeDamage(float amount)
         {
             Health = Math.Clamp(Health -amount, 0, float.MaxValue);
-            Console.WriteLine($"{Name} took {amount} of damage. Health is {Health}");
+            Console.WriteLine($"    - {Name} took damage. Health is {Health}");
 
             if (Health <= 0)
             {
