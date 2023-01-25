@@ -12,21 +12,26 @@ namespace AutoBattle.Effects
         private Vector2 damageRange;
         private Random random = new Random();
 
+        private bool reseted = false;
+
         public Bleed(int turns, Vector2 damageRange) 
         {
             this.turnsRemaining = turns;
             this.damageRange = damageRange;
         }
 
-        public bool Passed()
+        public bool Passed() 
         {
-            return turnsRemaining <= 0;
+            return reseted;
         }
 
         public void ApplyEffect(Character character)
         {
-            if (Passed())
+            if (turnsRemaining <= 0) 
+            {
+                ResetEffect(character);
                 return;
+            }
 
             var damage = random.Next((int)damageRange.X, (int)damageRange.Y);
 
@@ -36,9 +41,10 @@ namespace AutoBattle.Effects
             turnsRemaining--;
         }
 
-        public void ResetEffect(Character character)
+        private void ResetEffect(Character character)
         {
             Console.WriteLine($" - {character.Name} stopped bleeding");
+            reseted = true;
         }
     }
 }

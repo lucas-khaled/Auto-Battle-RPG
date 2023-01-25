@@ -17,7 +17,7 @@ namespace AutoBattle.Characters
 
         public Cleric(string name) : base(name)
         {
-            SetCharacterBasis(200, 8, null, new MoveAwayFromTarget(1), new SimpleAttackBehaviour(0,1), new FindClosestTargetBehaviour());
+            SetCharacterBasis(200, 8, null, new MoveTowardsTarget(1), new SimpleAttackBehaviour(0,1), new FindClosestTargetBehaviour());
         }
 
         public override void ChooseAction()
@@ -28,7 +28,7 @@ namespace AutoBattle.Characters
                 return;
             }
 
-            if (GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range)) 
+            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range)) 
             {
                 TurnAction = Attack;
                 return;
@@ -48,7 +48,7 @@ namespace AutoBattle.Characters
         {
             int heal = new Random().Next((int)healRange.X, (int)healRange.Y);
             Console.WriteLine($" - {Name} do healing");
-            AddEffect(new Heal(heal));
+            Target.AddEffect(new Heal(heal));
         }
 
         public override void DoAction()

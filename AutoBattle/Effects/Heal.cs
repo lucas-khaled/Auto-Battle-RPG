@@ -9,19 +9,15 @@ namespace AutoBattle.Effects
     {
         private bool applied = false;
         private int healAmount;
+
         public Heal(int healAmount)
         {
             this.healAmount = healAmount;
         }
 
-        public bool Passed()
-        {
-            return applied;
-        }
-
         public void ApplyEffect(Character character)
         {
-            if (Passed())
+            if (applied)
                 return;
 
             Console.WriteLine($" - {character.Name} heals {healAmount}");
@@ -30,9 +26,9 @@ namespace AutoBattle.Effects
             applied = true;
         }
 
-        public void ResetEffect(Character character)
+        public bool Passed()
         {
-            
+            return applied;
         }
     }
 }

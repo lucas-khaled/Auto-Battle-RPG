@@ -13,15 +13,32 @@ namespace AutoBattle.Characters
     {
         public Paladin(string name) : base(name)
         {
-            SetCharacterBasis(200, 10, null, new MoveTowardsTarget(1), new RowAttackBehaviour(1,1, 3), new FindClosestTargetBehaviour());
+            SetCharacterBasis(200, 10, new KnockDownAbility(), new MoveTowardsTarget(1), new RowAttackBehaviour(1,1, 3), new FindClosestTargetBehaviour());
         }
 
         public override void ChooseAction()
         {
-            if (GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range))
+            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range))
+            {
+                if (CanDoSpecial())
+                {
+                    TurnAction = DoSpecial;
+                    return;
+                }
+
                 TurnAction = Attack;
-            else
-                TurnAction = Move;
+                return;
+            }
+
+            TurnAction = Move;
+        }
+
+        private bool CanDoSpecial() 
+        {
+            if (SpecialAbility == null) return false;
+
+            int chance = new Random().Next(1, 101);
+            return SpecialAbility.CanDoSpecial() && chance < 40;
         }
 
         public override void DoAction()
