@@ -1,6 +1,7 @@
 ﻿using AutoBattle.Characters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace AutoBattle.Effects
@@ -8,17 +9,22 @@ namespace AutoBattle.Effects
     internal class KnockDown : IEffect
     {
         public bool applied = false;
+        public bool reseted = false;
 
         public bool Passed()
         {
-            return applied;
+            return reseted;
         }
 
         public void ApplyEffect(Character character)
         {
-            if (Passed())
+            if (applied) 
+            {
+                ResetEffect(character);
                 return;
-
+            }
+                
+            Console.WriteLine($" - {character.Name} was knocked down");
             character.CanAct = false;
             applied = true;
         }
@@ -26,6 +32,7 @@ namespace AutoBattle.Effects
         public void ResetEffect(Character character)
         {
             character.CanAct = true;
+            reseted = true;
         }
     }
 }

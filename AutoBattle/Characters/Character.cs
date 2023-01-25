@@ -117,20 +117,9 @@ namespace AutoBattle.Characters
         private void HandleEffects()
         {
             if (Effects.Count > 0)
-                Effects.ForEach(x => HandleEffect(x));
+                Effects.ForEach(effect => effect.ApplyEffect(this));
 
-            Effects.RemoveAll(x => x.Passed());
-        }
-
-        private void HandleEffect(IEffect effect)
-        {
-            if(effect.Passed())
-            {
-                effect.ResetEffect(this);
-                return;
-            }
-
-            effect.ApplyEffect(this);
+            Effects.RemoveAll(effect => effect.Passed());
         }
     }
 }

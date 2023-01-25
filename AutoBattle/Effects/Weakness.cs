@@ -10,6 +10,7 @@ namespace AutoBattle.Effects
         private int turnsRemaining;
         private int amount;
         private bool applied = false;
+        private bool reseted = false;
 
         public Weakness(int turns, int amount) 
         {
@@ -19,13 +20,16 @@ namespace AutoBattle.Effects
 
         public bool Passed()
         {
-            return applied && turnsRemaining < 0;
+            return reseted;
         }
 
         public void ApplyEffect(Character character)
         {
-            if (Passed()) 
+            if (turnsRemaining <= 0) 
+            {
+                ResetEffect(character);
                 return;
+            }  
             
             if(applied is false) 
             {
@@ -40,6 +44,7 @@ namespace AutoBattle.Effects
         public void ResetEffect(Character character)
         {
             character.BaseDamage += amount;
+            reseted = true;
         }
     }
 }

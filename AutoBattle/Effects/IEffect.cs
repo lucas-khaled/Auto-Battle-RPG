@@ -8,7 +8,6 @@ namespace AutoBattle.Effects
     public interface IEffect
     {
         void ApplyEffect(Character character);
-        void ResetEffect(Character character);
 
         bool Passed();
     }
