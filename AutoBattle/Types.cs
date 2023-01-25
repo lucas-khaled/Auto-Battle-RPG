@@ -29,6 +29,11 @@ namespace AutoBattle
                 this.ocupiedBy = ocupiedBy;
                 this.Index = index;
             }
+
+            public override string ToString()
+            {
+                return $"({xIndex},{yIndex})";
+            }
         }
 
         public struct CharacterSkills
