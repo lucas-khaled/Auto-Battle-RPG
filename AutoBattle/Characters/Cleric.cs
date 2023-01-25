@@ -28,7 +28,7 @@ namespace AutoBattle.Characters
                 return;
             }
 
-            if (GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range)) 
+            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range)) 
             {
                 TurnAction = Attack;
                 return;

@@ -14,8 +14,8 @@ namespace AutoBattle.Characters
     public abstract class Character : GridObject
     {
         public bool CanAct { get; set; } = true;
+        public bool Visible { get; set; } = true;
         public int BaseDamage { get; set; }
-        public bool Visible { get; set; }
 
         public Character Target { get; set; }
 
