@@ -41,7 +41,7 @@ namespace AutoBattle
             return (float)Math.Sqrt(Math.Pow(from.xIndex - to.xIndex, 2) + Math.Pow(from.yIndex - to.yIndex, 2));
         }
 
-        public bool IsInRange(GridBox from, GridBox to, float range) 
+        public bool IsInRange(GridBox from, GridBox to, int range) 
         {
             var actualRange = Math.Floor(CalculateDistance(from, to));
             return actualRange <= range;

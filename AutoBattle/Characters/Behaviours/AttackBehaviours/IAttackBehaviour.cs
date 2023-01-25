@@ -6,6 +6,7 @@ namespace AutoBattle.Characters.Behaviours.AttackBehaviours
 {
     public interface IAttackBehaviour
     {
+        int Range { get; }
         void Attack(Character character);
     }
 }

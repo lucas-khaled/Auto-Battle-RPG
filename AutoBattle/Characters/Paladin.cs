@@ -2,6 +2,7 @@
 using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
+using AutoBattle.GameManagement;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,12 +13,15 @@ namespace AutoBattle.Characters
     {
         public Paladin(string name) : base(name)
         {
-            SetCharacterBasis(200, 10, null, new MoveTowardsTarget(1), null, new FindClosestTargetBehaviour());
+            SetCharacterBasis(200, 10, null, new MoveTowardsTarget(1), new RowAttackBehaviour(1,1, 3), new FindClosestTargetBehaviour());
         }
 
         public override void ChooseAction()
         {
-            TurnAction = Move;
+            if (GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range))
+                TurnAction = Attack;
+            else
+                TurnAction = Move;
         }
 
         public override void DoAction()

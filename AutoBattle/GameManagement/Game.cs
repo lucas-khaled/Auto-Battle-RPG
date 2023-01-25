@@ -53,7 +53,7 @@ namespace AutoBattle.GameManagement
 
         public bool HasEnded() 
         {
-            return started && (characters.Count(x => x.IsDead is false) <= 1 || Turn >= 5);
+            return started && (characters.Count(x => x.IsDead is false) <= 1);
         }
 
         public void MoveObject(GridObject gridObject, GridBox box) 
