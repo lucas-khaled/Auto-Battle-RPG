@@ -8,6 +8,7 @@ namespace AutoBattle.Abilities
     public interface ISpecialAbility
     {
         string Name { get; }
-        bool DoSpecial(Character character);
+        bool CanDoSpecial();
+        void DoSpecial(Character character);
     }
 }
