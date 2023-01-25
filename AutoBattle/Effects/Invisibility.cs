@@ -14,6 +14,7 @@ namespace AutoBattle.Effects
         {
             this.turnsRemaining = turns;
         }
+
         public void ApplyEffect(Character character)
         {
             if (turnsRemaining <= 0) 
@@ -21,18 +22,23 @@ namespace AutoBattle.Effects
                 ResetEffect(character);
                 return;
             }
+
+            Console.WriteLine($" - {character.Name} have become invisible!");
                 
             character.Visible = false;
+            turnsRemaining--;
         }
 
         public bool Passed()
         {
-            return turnsRemaining <= 0;
+            return reseted;
         }
 
         public void ResetEffect(Character character)
         {
             character.Visible = true;
+            Console.WriteLine($" - {character.Name} is now visible!");
+
             reseted = true;
         }
     }

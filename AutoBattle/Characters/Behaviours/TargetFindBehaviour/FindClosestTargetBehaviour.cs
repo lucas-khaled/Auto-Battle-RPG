@@ -11,12 +11,18 @@ namespace AutoBattle.Characters.Behaviours.TargetFindBehaviour
         public void FindTarget(Character character)
         {
             var myBox = character.GetCurrentPlace();
-            var closest = GameManager.actualGame.Grid.boxes
-                .Where(box => box.ocupiedBy is Character && box.ocupiedBy != character)
+            var orderedTargets = GameManager.actualGame.Grid.boxes
+                .Where(box => box.ocupiedBy is Character target && target.Visible && box.ocupiedBy != character)
                 .OrderBy(box => Math.Abs(box.yIndex - myBox.yIndex) + Math.Abs(box.xIndex - box.xIndex))
-                .ToArray()[0];
+                .ToArray();
 
-            character.Target = closest.ocupiedBy as Character;
+            if(orderedTargets.Length <= 0) 
+            {
+                character.Target = null;
+                return;
+            }
+
+            character.Target = orderedTargets[0].ocupiedBy as Character;
         }
     }
 }

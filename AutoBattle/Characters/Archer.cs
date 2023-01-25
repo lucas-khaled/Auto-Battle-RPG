@@ -12,14 +12,32 @@ namespace AutoBattle.Characters
     {
         public Archer(string name) : base(name)
         {
-            SetCharacterBasis(100, 12, null, new MoveTowardsTarget(2), new SimpleAttackBehaviour(6,2), new FindClosestTargetBehaviour());
+            SetCharacterBasis(100, 12, new InvisibilityAbility(), new MoveTowardsTarget(2), new SimpleAttackBehaviour(6,2), new FindClosestTargetBehaviour());
         }
+
         public override void ChooseAction()
         {
-            if (GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range))
+            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range))
+            {
+                if (CanDoSpecial())
+                {
+                    TurnAction = DoSpecial;
+                    return;
+                }
+
                 TurnAction = Attack;
-            else
-                TurnAction = Move;
+                return;
+            }
+
+            TurnAction = Move;
+        }
+
+        private bool CanDoSpecial()
+        {
+            if (specialAbility == null) return false;
+
+            int chance = new Random().Next(1, 101);
+            return specialAbility.CanDoSpecial() && Health < 50 || chance < 30;
         }
 
         public override void DoAction()
