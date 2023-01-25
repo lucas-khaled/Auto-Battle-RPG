@@ -54,7 +54,7 @@ namespace AutoBattle.Characters
 
         public bool TakeDamage(float amount)
         {
-            Health -= amount;
+            Health = Math.Clamp(Health -amount, 0, float.MaxValue);
             Console.WriteLine($"{Name} took {amount} of damage. Health is {Health}");
 
             if (Health <= 0)
@@ -68,7 +68,7 @@ namespace AutoBattle.Characters
         public void Die()
         {
             IsDead = true;
-            Console.WriteLine($"{Name} has died!!");
+            Console.WriteLine($"{Name} HAS DIED!!");
             //TODO >> maybe kill him?
         }
 
