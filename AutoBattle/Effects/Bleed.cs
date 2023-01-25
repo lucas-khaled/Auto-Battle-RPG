@@ -18,10 +18,15 @@ namespace AutoBattle.Effects
             this.damageRange = damageRange;
         }
 
-        public bool ApplyEffect(Character character)
+        public bool Passed()
         {
-            if (turnsRemaining <= 0)
-                return false;
+            return turnsRemaining <= 0;
+        }
+
+        public void ApplyEffect(Character character)
+        {
+            if (Passed())
+                return;
 
             var damage = random.Next((int)damageRange.X, (int)damageRange.Y);
 
@@ -29,8 +34,11 @@ namespace AutoBattle.Effects
 
             character.TakeDamage(damage);
             turnsRemaining--;
+        }
 
-            return true;
+        public void ResetEffect(Character character)
+        {
+            Console.WriteLine($" - {character.Name} stopped bleeding");
         }
     }
 }

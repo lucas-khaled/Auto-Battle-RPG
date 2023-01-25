@@ -12,16 +12,22 @@ namespace AutoBattle.Effects
         {
             this.turnsRemaining = turns;
         }
-        public bool ApplyEffect(Character character)
+        public void ApplyEffect(Character character)
         {
-            if (turnsRemaining <= 0) 
-            {
-                character.Visible = true; 
-                return false;
-            }
+            if (Passed()) 
+                return;
                 
             character.Visible = false;
-            return true;
+        }
+
+        public bool Passed()
+        {
+            return turnsRemaining <= 0;
+        }
+
+        public void ResetEffect(Character character)
+        {
+            character.Visible = true;
         }
     }
 }

@@ -17,13 +17,15 @@ namespace AutoBattle.Effects
             this.amount = amount;
         }
 
-        public bool ApplyEffect(Character character)
+        public bool Passed()
         {
-            if (turnsRemaining <= 0) 
-            {
-                character.BaseDamage += amount;
-                return false;
-            }
+            return applied && turnsRemaining < 0;
+        }
+
+        public void ApplyEffect(Character character)
+        {
+            if (Passed()) 
+                return;
             
             if(applied is false) 
             {
@@ -33,7 +35,11 @@ namespace AutoBattle.Effects
             }
 
             turnsRemaining--;
-            return true;
+        }
+
+        public void ResetEffect(Character character)
+        {
+            character.BaseDamage += amount;
         }
     }
 }
