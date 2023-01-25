@@ -1,6 +1,7 @@
 ﻿using AutoBattle.Abilities;
 using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
+using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,17 +12,17 @@ namespace AutoBattle.Characters
     {
         public Paladin(string name) : base(name)
         {
-            SetCharacterBasis(200, 10, null, null, null);
+            SetCharacterBasis(200, 10, null, new MoveTowardsTarget(1), null, new FindClosestTargetBehaviour());
         }
 
         public override void ChooseAction()
         {
-            throw new NotImplementedException();
+            TurnAction = Move;
         }
 
         public override void DoAction()
         {
-            throw new NotImplementedException();
+            TurnAction?.Invoke();
         }
     }
 }

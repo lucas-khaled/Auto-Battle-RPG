@@ -13,7 +13,7 @@ namespace AutoBattle.Characters
 {
     public abstract class Character : GridObject
     {
-        public bool CanAct { get; set; }
+        public bool CanAct { get; set; } = true;
         public int BaseDamage { get; set; }
         public bool Visible { get; set; }
 
@@ -23,8 +23,8 @@ namespace AutoBattle.Characters
         public bool IsDead { get; protected set; }
 
         public Action TurnAction { get; protected set; }
-        
-        public List<IEffect> Effects { get; protected set; }
+
+        public List<IEffect> Effects { get; protected set; } = new List<IEffect>();
 
         protected ISpecialAbility specialAbility;
         protected IAttackBehaviour attackBehaviour;
@@ -42,12 +42,14 @@ namespace AutoBattle.Characters
 
         public void ApplyEffects() 
         {
-            Effects.ForEach(x => ApplyEffect(x));
+            if(Effects.Count > 0)
+                Effects.ForEach(x => ApplyEffect(x));
         }
 
         public void FindTarget() 
         {
-            targetFindBehaviour.FindTarget(this);
+            targetFindBehaviour?.FindTarget(this);
+            Console.WriteLine(Name + " found target: " + Target.Name);
         }
 
         public bool TakeDamage(float amount)
@@ -69,12 +71,13 @@ namespace AutoBattle.Characters
 
         public void Move() 
         {
-            moveBehaviour.Move(this);
+            moveBehaviour?.Move(this);
+            Console.WriteLine($"{Name} moved to {currentBox.ToString()}");
         }
 
         public void Attack() 
         {
-            attackBehaviour.Attack(this);
+            attackBehaviour?.Attack(this);
         }
 
         public void DoTurn() 
