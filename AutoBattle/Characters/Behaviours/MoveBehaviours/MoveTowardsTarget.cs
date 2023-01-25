@@ -29,7 +29,7 @@ namespace AutoBattle.Characters.Behaviours.MoveBehaviours
             var random = new Random();
             var newPosition = possibilities[random.Next(0, possibilities.Count)];
 
-            character.SetCurrentPlace(newPosition);
+            GameManager.actualGame.MoveObject(character,newPosition);
         }
 
         private List<GridBox> EvaluateMovementPossibilities(GridBox position, GridBox targetPosition, Grid grid) 
@@ -40,7 +40,7 @@ namespace AutoBattle.Characters.Behaviours.MoveBehaviours
             for(int x = -moveRange; x <= moveRange; x++) 
             {
                 var newX = position.xIndex + x;
-                if (newX <= 0 || newX >= grid.xLenght) continue;
+                if (newX <= 0 || newX >= grid.xLength) continue;
 
                 for (int y = -moveRange; y <= moveRange; y++) 
                 {
