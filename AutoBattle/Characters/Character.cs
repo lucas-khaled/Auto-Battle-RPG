@@ -76,6 +76,11 @@ namespace AutoBattle.Characters
             attackBehaviour?.Attack(this);
         }
 
+        public virtual void DoSpecial() 
+        {
+            specialAbility?.DoSpecial(this);
+        }
+
         public void DoTurn() 
         {
             if (IsDead) return;

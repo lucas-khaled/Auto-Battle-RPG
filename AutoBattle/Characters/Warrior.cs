@@ -1,4 +1,5 @@
-﻿using AutoBattle.Characters.Behaviours.AttackBehaviours;
+﻿using AutoBattle.Abilities;
+using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
 using AutoBattle.Effects;
@@ -15,15 +16,24 @@ namespace AutoBattle.Characters
         private Vector2 bleedDamageRange = new Vector2(10, 20);
         public Warrior(string name) : base(name)
         {
-            SetCharacterBasis(130, 20, null, new MoveTowardsTarget(1), new SimpleAttackBehaviour(3,1), new FindClosestTargetBehaviour());
+            SetCharacterBasis(130, 20, new StrongAttackAbility(), new MoveTowardsTarget(1), new SimpleAttackBehaviour(3,1), new FindClosestTargetBehaviour());
         }
 
         public override void ChooseAction()
         {
             if (GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range))
+            {
+                if (CanDoSpecial())
+                {
+                    TurnAction = DoSpecial;
+                    return;
+                }
+
                 TurnAction = Attack;
-            else
-                TurnAction = Move;
+                return;
+            }
+
+            TurnAction = Move;
         }
 
         public override void Attack()
@@ -35,6 +45,14 @@ namespace AutoBattle.Characters
         public override void DoAction()
         {
             TurnAction?.Invoke();
+        }
+
+        private bool CanDoSpecial() 
+        {
+            if (specialAbility == null) return false;
+
+            int chance = new Random().Next(1, 101);
+            return specialAbility.CanDoSpecial() && (Health < 30 || chance < 20);
         }
 
         private void TryDoBleed() 
