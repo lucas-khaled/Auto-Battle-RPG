@@ -18,7 +18,7 @@ namespace AutoBattle.Characters
 
         public override void ChooseAction()
         {
-            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range))
+            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range))
             {
                 if (CanDoSpecial())
                 {
@@ -35,10 +35,10 @@ namespace AutoBattle.Characters
 
         private bool CanDoSpecial() 
         {
-            if (specialAbility == null) return false;
+            if (SpecialAbility == null) return false;
 
             int chance = new Random().Next(1, 101);
-            return specialAbility.CanDoSpecial() && chance < 40;
+            return SpecialAbility.CanDoSpecial() && chance < 40;
         }
 
         public override void DoAction()

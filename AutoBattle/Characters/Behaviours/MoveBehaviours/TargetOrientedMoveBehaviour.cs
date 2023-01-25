@@ -2,16 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
 using static AutoBattle.Types;
 
 namespace AutoBattle.Characters.Behaviours.MoveBehaviours
 {
     public abstract class TargetOrientedMoveBehaviour : IMoveBehaviour
     {
-        private int moveRange;
+        public int MoveRange { get; }
+
         public TargetOrientedMoveBehaviour(int moveRange)
         {
-            this.moveRange = moveRange;
+            this.MoveRange = moveRange;
         }
 
         public void Move(Character character)
@@ -34,22 +36,22 @@ namespace AutoBattle.Characters.Behaviours.MoveBehaviours
             var newPosition = possibilities[random.Next(0, possibilities.Count)];
 
             GameManager.actualGame.MoveObject(character, newPosition);
+
+            Console.WriteLine($"{character.Name} moved to {character.currentBox.ToString()}");
         }
 
         protected virtual List<GridBox> EvaluateMovementPossibilities(GridBox position, GridBox targetPosition, Grid grid)
         {
-            if (grid.IsInRange(position, targetPosition, moveRange)) return null;
-
             StartedEvaluation(position, targetPosition, grid);
 
             List<GridBox> possibilities = new List<GridBox>();
 
-            for (int x = -moveRange; x <= moveRange; x++)
+            for (int x = -MoveRange; x <= MoveRange; x++)
             {
                 var newX = position.xIndex + x;
                 if (newX < 0 || newX >= grid.xLength) continue;
 
-                for (int y = -moveRange; y <= moveRange; y++)
+                for (int y = -MoveRange; y <= MoveRange; y++)
                 {
                     var newY = position.yIndex + y;
                     if (newY < 0 || newY >= grid.yLength) continue;

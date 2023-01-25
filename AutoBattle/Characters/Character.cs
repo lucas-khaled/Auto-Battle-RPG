@@ -26,10 +26,10 @@ namespace AutoBattle.Characters
 
         public List<IEffect> Effects { get; protected set; } = new List<IEffect>();
 
-        protected ISpecialAbility specialAbility;
-        protected IAttackBehaviour attackBehaviour;
-        protected IMoveBehaviour moveBehaviour;
-        protected ITargetFindBehaviour targetFindBehaviour;
+        public ISpecialAbility SpecialAbility { get; protected set; }
+        public IAttackBehaviour AttackBehaviour { get; protected set; }
+        public IMoveBehaviour MoveBehaviour { get; protected set; }
+        public ITargetFindBehaviour TargetFindBehaviour { get; protected set; }
 
         protected Character(string name) : base(name)
         {
@@ -42,7 +42,7 @@ namespace AutoBattle.Characters
 
         public void FindTarget() 
         {
-            targetFindBehaviour?.FindTarget(this);
+            TargetFindBehaviour?.FindTarget(this);
         }
 
         public bool TakeDamage(float amount)
@@ -62,23 +62,21 @@ namespace AutoBattle.Characters
         {
             IsDead = true;
             Console.WriteLine($"{Name} HAS DIED!!");
-            //TODO >> maybe kill him?
         }
 
         public virtual void Move() 
         {
-            moveBehaviour?.Move(this);
-            Console.WriteLine($"{Name} moved to {currentBox.ToString()}");
+            MoveBehaviour?.Move(this);
         }
 
         public virtual void Attack() 
         {
-            attackBehaviour?.Attack(this);
+            AttackBehaviour?.Attack(this);
         }
 
         public virtual void DoSpecial() 
         {
-            specialAbility?.DoSpecial(this);
+            SpecialAbility?.DoSpecial(this);
         }
 
         public void DoTurn() 
@@ -106,10 +104,10 @@ namespace AutoBattle.Characters
             Health = health;
             BaseDamage = baseDamage;
 
-            this.specialAbility = specialAbility;
-            this.attackBehaviour = attackBehaviour;
-            this.moveBehaviour = moveBehaviour;
-            this.targetFindBehaviour = targetFindBehaviour;
+            this.SpecialAbility = specialAbility;
+            this.AttackBehaviour = attackBehaviour;
+            this.MoveBehaviour = moveBehaviour;
+            this.TargetFindBehaviour = targetFindBehaviour;
 
             IsDead = false;
         }

@@ -6,6 +6,7 @@ namespace AutoBattle.Characters.Behaviours.MoveBehaviours
 {
     public interface IMoveBehaviour
     {
+        int MoveRange { get; }
         void Move(Character character);
     }
 }

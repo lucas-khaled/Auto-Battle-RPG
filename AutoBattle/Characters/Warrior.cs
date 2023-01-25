@@ -21,7 +21,7 @@ namespace AutoBattle.Characters
 
         public override void ChooseAction()
         {
-            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, attackBehaviour.Range))
+            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range))
             {
                 if (CanDoSpecial())
                 {
@@ -49,10 +49,10 @@ namespace AutoBattle.Characters
 
         private bool CanDoSpecial() 
         {
-            if (specialAbility == null) return false;
+            if (SpecialAbility == null) return false;
 
             int chance = new Random().Next(1, 101);
-            return specialAbility.CanDoSpecial() && (Health < 30 || chance < 20);
+            return SpecialAbility.CanDoSpecial() && (Health < 30 || chance < 20);
         }
 
         private void TryDoBleed() 
