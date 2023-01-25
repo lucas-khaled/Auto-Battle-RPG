@@ -4,49 +4,63 @@ using System.Text;
 using System.Linq;
 using static AutoBattle.Types;
 using System.Drawing;
+using AutoBattle.GameManagement;
 
 namespace AutoBattle
 {
     public class Grid
     {
-        public List<GridBox> boxes = new List<GridBox>();
-        public int xLenght;
+        public List<GridBox> boxes { get; private set; } = new List<GridBox>();
+        public int xLength;
         public int yLength;
         public Grid(int Lines, int Columns)
         {
-            xLenght = Lines;
+            xLength = Lines;
             yLength = Columns;
-            Console.WriteLine("The battle field has been created\n");
-            for (int i = 0; i < Lines; i++)
+            Console.WriteLine($"The battle field has been created as {xLength} X {yLength}\n");
+            for (int y = 0; y < Lines; y++)
             {
-                for(int j = 0; j < Columns; j++)
+                for(int x = 0; x < Columns; x++)
                 {
-                    GridBox newBox = new GridBox(j, i, false, (Columns * i + j));
-                    Console.Write($"{newBox.Index}\n");
+                    GridBox newBox = new GridBox(x, y, null, (Columns * y + x));
                     boxes.Add(newBox);
                 }
             }
         }
 
+        public void SetPosition(GridBox box) 
+        {
+            if (box.xIndex >= xLength || box.yIndex >= yLength) return;
+
+            int index = GetBoxIndex(box);
+            boxes[index] = box;
+        }
+
+        public int GetBoxIndex(GridBox box) 
+        {
+            return xLength * box.yIndex + box.xIndex;
+        }
+
         public GridBox GetBoxInPosition(int x, int y) 
         {
-            int WrapX = ((x % xLenght) + xLenght) % xLenght;
+            int WrapX = ((x % xLength) + xLength) % xLength;
             int WrapY = ((y % yLength) + yLength) % yLength;
             int index = yLength * WrapX + WrapY;
             return boxes[index];
         }
 
         // prints the matrix that indicates the tiles of the battlefield
-        public void DrawBattlefield(int Lines, int Columns)
+        public void DrawBattlefield()
         {
-            for (int i = 0; i < Lines; i++)
+            Console.Write(Environment.NewLine + Environment.NewLine);
+            for (int y = 0; y < yLength; y++)
             {
-                for (int j = 0; j < Columns; j++)
+                for (int x = 0; x < xLength; x++)
                 {
-                    GridBox currentgrid = new GridBox();
-                    if (currentgrid.ocupiedBy)
+                    GridBox currentgrid = boxes[xLength * y + x];
+                    if (currentgrid.ocupiedBy != null)
                     {
-                        Console.Write("[X]\t");
+                        Console.Write($"[{currentgrid.ocupiedBy.Name[0]}]\t");
                     }
                     else
                     {
