@@ -14,14 +14,25 @@ namespace AutoBattle.Effects
             this.healAmount = healAmount;
         }
 
-        public bool ApplyEffect(Character character)
+        public bool Passed()
         {
-            if (applied)
-                return false;
+            return applied;
+        }
+
+        public void ApplyEffect(Character character)
+        {
+            if (Passed())
+                return;
+
+            Console.WriteLine($" - {character.Name} heals {healAmount}");
 
             character.TakeDamage(-this.healAmount);
             applied = true;
-            return true;
+        }
+
+        public void ResetEffect(Character character)
+        {
+            
         }
     }
 }

@@ -9,17 +9,23 @@ namespace AutoBattle.Effects
     {
         public bool applied = false;
 
-        public bool ApplyEffect(Character character)
+        public bool Passed()
         {
-            if (applied)
-            {
-                character.CanAct = true;
-                return false;
-            }
+            return applied;
+        }
+
+        public void ApplyEffect(Character character)
+        {
+            if (Passed())
+                return;
 
             character.CanAct = false;
             applied = true;
-            return true;
+        }
+
+        public void ResetEffect(Character character)
+        {
+            character.CanAct = true;
         }
     }
 }
