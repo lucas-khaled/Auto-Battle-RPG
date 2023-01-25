@@ -31,7 +31,7 @@ namespace AutoBattle.Characters.Behaviours.MoveBehaviours
 
         protected override void StartedEvaluation(GridBox position, GridBox targetPosition, Grid grid)
         {
-            float distance = grid.CalculateDistance(position, targetPosition);
+            distance = grid.CalculateDistance(position, targetPosition);
         }
     }
 }
