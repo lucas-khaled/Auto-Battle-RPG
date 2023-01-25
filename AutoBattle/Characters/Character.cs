@@ -113,6 +113,8 @@ namespace AutoBattle.Characters
         {
             if (Effects.Count > 0)
                 Effects.ForEach(x => HandleEffect(x));
+
+            Effects.RemoveAll(x => x.Passed());
         }
 
         private void HandleEffect(IEffect effect)
@@ -120,7 +122,6 @@ namespace AutoBattle.Characters
             if(effect.Passed())
             {
                 effect.ResetEffect(this);
-                Effects.Remove(effect);
                 return;
             }
 
