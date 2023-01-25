@@ -55,6 +55,8 @@ namespace AutoBattle.Characters
         public bool TakeDamage(float amount)
         {
             Health -= amount;
+            Console.WriteLine($"{Name} took {amount} of damage. Health is {Health}");
+
             if (Health <= 0)
             {
                 Die();
@@ -66,6 +68,7 @@ namespace AutoBattle.Characters
         public void Die()
         {
             IsDead = true;
+            Console.WriteLine($"{Name} has died!!");
             //TODO >> maybe kill him?
         }
 
@@ -82,6 +85,8 @@ namespace AutoBattle.Characters
 
         public void DoTurn() 
         {
+            if (IsDead) return;
+
             ApplyEffects();
 
             if (CanAct is false) return;
@@ -89,6 +94,8 @@ namespace AutoBattle.Characters
             FindTarget();
             ChooseAction();
             DoAction();
+
+            Console.WriteLine($"{Name} ended Turn.\n");
         }
 
         public abstract void ChooseAction();
