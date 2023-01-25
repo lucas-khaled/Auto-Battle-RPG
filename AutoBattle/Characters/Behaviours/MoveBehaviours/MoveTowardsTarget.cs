@@ -34,36 +34,38 @@ namespace AutoBattle.Characters.Behaviours.MoveBehaviours
 
         private List<GridBox> EvaluateMovementPossibilities(GridBox position, GridBox targetPosition, Grid grid) 
         {
+            if (grid.IsInRange(position, targetPosition, moveRange)) return null;
+
             List<GridBox> possibilities = new List<GridBox>();
-            int distance = CalculateDistance(position, targetPosition);
+            float distance = grid.CalculateDistance(position, targetPosition);
 
             for(int x = -moveRange; x <= moveRange; x++) 
             {
                 var newX = position.xIndex + x;
-                if (newX <= 0 || newX >= grid.xLength) continue;
+                if (newX < 0 || newX >= grid.xLength) continue;
 
                 for (int y = -moveRange; y <= moveRange; y++) 
                 {
                     var newY = position.yIndex + y;
-                    if (newY <= 0 || newY >= grid.yLength) continue;
+                    if (newY < 0 || newY >= grid.yLength) continue;
 
                     var newBox = grid.GetBoxInPosition(newX, newY);
                     if (newBox.ocupiedBy != null) continue;
 
-                    var newDistance = CalculateDistance(newBox, targetPosition);
+                    var newDistance = grid.CalculateDistance(newBox, targetPosition);
                     if (newDistance > distance) continue;
 
-                    distance = newDistance;
+                    if (newDistance != distance)
+                    {
+                        distance = newDistance;
+                        possibilities.Clear();
+                    }
+
                     possibilities.Add(newBox);
                 }
             }
 
             return possibilities;
-        }
-
-        private int CalculateDistance(GridBox from, GridBox to) 
-        {
-            return Math.Abs(from.xIndex - to.xIndex) + Math.Abs(from.yIndex = to.yIndex);
         }
     }
 }

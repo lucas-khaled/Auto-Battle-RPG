@@ -30,22 +30,28 @@ namespace AutoBattle
 
         public void SetPosition(GridBox box) 
         {
-            if (box.xIndex >= xLength || box.yIndex >= yLength) return;
+            if (box.Index < 0 || box.Index >= boxes.Count) return;
 
-            int index = GetBoxIndex(box);
+            int index = box.Index;
             boxes[index] = box;
         }
 
-        public int GetBoxIndex(GridBox box) 
+        public float CalculateDistance(GridBox from, GridBox to)
         {
-            return xLength * box.yIndex + box.xIndex;
+            return (float)Math.Sqrt(Math.Pow(from.xIndex - to.xIndex, 2) + Math.Pow(from.yIndex - to.yIndex, 2));
+        }
+
+        public bool IsInRange(GridBox from, GridBox to, float range) 
+        {
+            var actualRange = Math.Floor(CalculateDistance(from, to));
+            return actualRange <= range;
         }
 
         public GridBox GetBoxInPosition(int x, int y) 
         {
             int WrapX = ((x % xLength) + xLength) % xLength;
             int WrapY = ((y % yLength) + yLength) % yLength;
-            int index = yLength * WrapX + WrapY;
+            int index = xLength * WrapY + WrapX;
             return boxes[index];
         }
 
