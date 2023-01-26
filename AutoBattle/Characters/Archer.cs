@@ -1,10 +1,9 @@
-﻿using AutoBattle.Characters.Behaviours.AttackBehaviours;
+﻿using AutoBattle.Abilities;
+using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
 using AutoBattle.GameManagement;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoBattle.Characters
 {
