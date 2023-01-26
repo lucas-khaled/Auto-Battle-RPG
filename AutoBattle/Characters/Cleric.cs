@@ -18,7 +18,7 @@ namespace AutoBattle.Characters
 
         public Cleric(string name) : base(name)
         {
-            SetCharacterBasis(200, 8, new FrightenAbility(), new MoveAwayFromTarget(1), new SimpleAttackBehaviour(0,1), new FindClosestTargetBehaviour());
+            SetCharacterBasis(200, 8, new FrightenAbility(), new MoveTowardsTarget(1), new SimpleAttackBehaviour(0,1), new FindClosestTargetBehaviour());
         }
 
         public override void ChooseAction()
