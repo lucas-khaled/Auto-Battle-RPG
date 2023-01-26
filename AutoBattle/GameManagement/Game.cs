@@ -32,8 +32,7 @@ namespace AutoBattle.GameManagement
         public void StartGame() 
         {
             started = true;
-
-            //characters.Sort();
+            characters.Shuffle();
             PlaceCharacters(characters);
         }
 
