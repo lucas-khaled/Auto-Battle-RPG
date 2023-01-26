@@ -24,7 +24,7 @@ namespace AutoBattle.Abilities
         {
             lastActivationTurn = GameManager.actualGame.Turn;
 
-            Console.WriteLine($" - {character.Name} used {Name}".ToUpper());
+            Console.WriteLine($" {character.Name} used {Name}".ToUpper());
 
             character.AddEffect(new Invisibility(turnsOfInvisibility));
         }

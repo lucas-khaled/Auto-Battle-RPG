@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using static AutoBattle.Types;
 
 namespace AutoBattle.GameManagement
@@ -47,8 +48,12 @@ namespace AutoBattle.GameManagement
 
             Turn++;
             Console.WriteLine("TURN: "+Turn);
-            foreach (var character in characters)
+            foreach (var character in characters) 
+            {
+                Thread.Sleep(500);
                 character.DoTurn();
+            }
+                
         }
 
         public bool HasEnded() 
@@ -80,7 +85,17 @@ namespace AutoBattle.GameManagement
 
         private void PlaceCharacters(List<Character> characters) 
         {
-            characters.ForEach(character => MoveObject(character, GetRandomFreePosInGrid()));
+            Console.WriteLine("\nPlacing Characters...");
+            characters.ForEach(character =>
+            {
+                Thread.Sleep(1000);
+
+                Console.WriteLine($"\nPlacing {character.Name}...");
+
+                Thread.Sleep(500);
+
+                MoveObject(character, GetRandomFreePosInGrid());
+            });
         }
 
         public GridBox GetRandomFreePosInGrid() 

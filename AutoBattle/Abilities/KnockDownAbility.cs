@@ -23,7 +23,7 @@ namespace AutoBattle.Abilities
         {
             lastActivationTurn = GameManager.actualGame.Turn;
 
-            Console.WriteLine($" - {character.Name} used {Name} on {character.Target.Name}".ToUpper());
+            Console.WriteLine($" {character.Name} used {Name} on {character.Target.Name}".ToUpper());
 
             character.Target.AddEffect(new KnockDown());
         }

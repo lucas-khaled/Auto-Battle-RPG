@@ -8,6 +8,7 @@ using AutoBattle.Effects;
 using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
+using System.Threading;
 
 namespace AutoBattle.Characters
 {
@@ -61,7 +62,7 @@ namespace AutoBattle.Characters
         public void Die()
         {
             IsDead = true;
-            Console.WriteLine($"{Name} HAS DIED!!");
+            Console.WriteLine($" {Name} HAS DIED!!");
         }
 
         public virtual void Move() 
@@ -81,17 +82,19 @@ namespace AutoBattle.Characters
 
         public void DoTurn() 
         {
-            if (IsDead) return;
-
+            Console.WriteLine($"\n {Name}'s turn");
             HandleEffects();
+            Thread.Sleep(500);
 
-            if (CanAct is false) return;
+            if (CanAct && IsDead is false)
+            {
+                FindTarget();
+                ChooseAction();
+                DoAction();
+            }
 
-            FindTarget();
-            ChooseAction();
-            DoAction();
-
-            Console.WriteLine($"{Name} ended Turn.\n");
+            Thread.Sleep(500);
+            EndTurn();
         }
 
         public abstract void ChooseAction();
@@ -114,10 +117,27 @@ namespace AutoBattle.Characters
 
         private void HandleEffects()
         {
-            if (Effects.Count > 0)
-                Effects.ForEach(effect => effect.ApplyEffect(this));
+            if (Effects.Count < 0)
+                return;
 
+            Effects.ForEach(effect => HandleEffect(effect));
             Effects.RemoveAll(effect => effect.Passed());
+            Console.Write(Environment.NewLine);
+        }
+
+        private void HandleEffect(IEffect effect) 
+        {
+            if (IsDead) return;
+
+            effect.ApplyEffect(this);
+        }
+
+        private void EndTurn() 
+        {
+            Console.WriteLine($"\n {Name} ended his turn");
+            Console.WriteLine(" -------------------\n");
+
+            Thread.Sleep(1000);
         }
     }
 }
