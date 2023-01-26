@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace AutoBattle.GameManagement
 {
@@ -18,8 +19,16 @@ namespace AutoBattle.GameManagement
 
         private static void RunTurns(Game game) 
         {
-            while(game.HasEnded() is false) 
+            Console.WriteLine("Press any key for start!");
+            Console.ReadKey();
+
+            while (game.HasEnded() is false) 
+            {
                 game.RunTurn();
+                Console.WriteLine("\n Press any key for next Turn\n");
+                Console.ReadKey();
+            } 
+                
         }
     }
 }

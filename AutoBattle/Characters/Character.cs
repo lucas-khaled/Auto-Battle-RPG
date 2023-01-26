@@ -8,6 +8,7 @@ using AutoBattle.Effects;
 using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
+using System.Threading;
 
 namespace AutoBattle.Characters
 {
@@ -83,6 +84,7 @@ namespace AutoBattle.Characters
         {
             Console.WriteLine($"\n {Name}'s turn");
             HandleEffects();
+            Thread.Sleep(500);
 
             if (CanAct && IsDead is false)
             {
@@ -91,6 +93,7 @@ namespace AutoBattle.Characters
                 DoAction();
             }
 
+            Thread.Sleep(500);
             EndTurn();
         }
 
@@ -133,6 +136,8 @@ namespace AutoBattle.Characters
         {
             Console.WriteLine($"\n {Name} ended his turn");
             Console.WriteLine(" -------------------\n");
+
+            Thread.Sleep(1000);
         }
     }
 }
