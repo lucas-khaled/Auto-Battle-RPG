@@ -9,6 +9,7 @@ using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
 using System.Threading;
+using AutoBattle.GameManagement;
 
 namespace AutoBattle.Characters
 {
@@ -18,6 +19,7 @@ namespace AutoBattle.Characters
         public bool Visible { get; set; } = true;
         public int BaseDamage { get; set; }
 
+        public Team Team { get; set; }
         public Character Target { get; set; }
 
         public float Health { get; protected set; }
