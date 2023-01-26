@@ -1,13 +1,13 @@
-﻿using AutoBattle.Abilities;
+﻿using AutoBattle.Characters;
 using AutoBattle.Effects;
 using AutoBattle.GameManagement;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoBattle.Characters.Behaviours.AttackBehaviours
+namespace AutoBattle.Abilities
 {
-    internal class InvisibilityAbility : ISpecialAbility
+    public class InvisibilityAbility : ISpecialAbility
     {
         public string Name => "Hiding";
 
