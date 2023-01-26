@@ -27,8 +27,10 @@ namespace AutoBattle.GameManagement
                 game.RunTurn();
                 Console.WriteLine("\n Press any key for next Turn\n");
                 Console.ReadKey();
-            } 
-                
+            }
+
+            game.EndGame();
+
         }
     }
 }

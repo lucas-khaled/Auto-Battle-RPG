@@ -39,7 +39,14 @@ namespace AutoBattle.GameManagement
 
         public void EndGame() 
         {
-            
+            var winningCharacter = characters.First(x => x.IsDead is false);
+            if (winningCharacter == null)
+            {
+                Console.WriteLine("\n\n         The game has ended and nobody won           ");
+                return;
+            }
+
+            Console.WriteLine($"\n\n         The game has ended and {winningCharacter.Name} won!           \n\n");
         }
 
         public void RunTurn() 
