@@ -25,7 +25,7 @@ namespace AutoBattle.Abilities
             int damage = character.BaseDamage * 2;
             var target = character.Target;
 
-            Console.WriteLine($" - {character.Name} DID {Name} ON {character.Target.Name} WITH DAMAGE OF {damage}".ToUpper());
+            Console.WriteLine($" {character.Name} DID {Name} ON {character.Target.Name} WITH DAMAGE OF {damage}".ToUpper());
 
             target.TakeDamage(damage);
 
@@ -41,7 +41,7 @@ namespace AutoBattle.Abilities
 
             if (bleedChance < 70) 
             {
-                Console.WriteLine($"    {Name} adds bleed effect to {target.Name}");
+                Console.WriteLine($" - {Name} adds bleed effect to {target.Name}");
                 int bleedTurns = new Random().Next(1, 3);
                 target.AddEffect(new Bleed(bleedTurns, bleedDamageRange));
             } 
@@ -53,7 +53,7 @@ namespace AutoBattle.Abilities
 
             if (weaknessChance < 50)
             {
-                Console.WriteLine($"    {Name} adds weakness effect to {target.Name}");
+                Console.WriteLine($" - {Name} adds weakness effect to {target.Name}");
                 int weaknessTurns = new Random().Next(1, 3);
                 int weaknessAmount = new Random().Next(4,8);
                 target.AddEffect(new Weakness(weaknessTurns, weaknessAmount));

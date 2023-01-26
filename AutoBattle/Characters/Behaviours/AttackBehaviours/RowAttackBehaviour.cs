@@ -25,7 +25,7 @@ namespace AutoBattle.Characters.Behaviours.AttackBehaviours
             var stepIdealDamage = (float)totalDamage / steps;
             var remainingDamage = totalDamage;
 
-            Console.WriteLine($"{character.Name} do Row Attack on {character.Target.Name}!");
+            Console.WriteLine($" {character.Name} do Row Attack on {character.Target.Name}!");
 
             for (int i = 1; i<=steps; i++) 
             {
