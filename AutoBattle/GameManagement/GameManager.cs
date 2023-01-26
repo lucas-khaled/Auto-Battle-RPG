@@ -10,9 +10,9 @@ namespace AutoBattle.GameManagement
     {
         public static Game actualGame { get; private set; }
 
-        public static void StartNewGame(Grid grid, params Character[] characters) 
+        public static void StartNewGame() 
         {
-            actualGame = new Game(grid, characters);
+            actualGame = new Game();
             actualGame.StartGame();
             RunTurns(actualGame);
         }

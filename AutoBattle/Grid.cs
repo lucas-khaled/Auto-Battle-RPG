@@ -17,7 +17,7 @@ namespace AutoBattle
         {
             xLength = Lines;
             yLength = Columns;
-            Console.WriteLine($"The battle field has been created as {xLength} X {yLength}\n");
+            Console.WriteLine($"\nThe battle field has been created as {xLength} X {yLength}\n");
             for (int y = 0; y < Lines; y++)
             {
                 for(int x = 0; x < Columns; x++)
