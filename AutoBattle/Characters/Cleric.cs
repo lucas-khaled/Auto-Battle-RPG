@@ -1,4 +1,5 @@
-﻿using AutoBattle.Characters.Behaviours.AttackBehaviours;
+﻿using AutoBattle.Abilities;
+using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
 using AutoBattle.Effects;
@@ -17,7 +18,7 @@ namespace AutoBattle.Characters
 
         public Cleric(string name) : base(name)
         {
-            SetCharacterBasis(200, 8, null, new MoveTowardsTarget(1), new SimpleAttackBehaviour(0,1), new FindClosestTargetBehaviour());
+            SetCharacterBasis(200, 8, new FrightenAbility(), new MoveAwayFromTarget(1), new SimpleAttackBehaviour(0,1), new FindClosestTargetBehaviour());
         }
 
         public override void ChooseAction()
@@ -30,11 +31,25 @@ namespace AutoBattle.Characters
 
             if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range)) 
             {
+                if (CanDoSpecial())
+                {
+                    TurnAction = DoSpecial;
+                    return;
+                }
+
                 TurnAction = Attack;
                 return;
             }
 
             TurnAction = Move;
+        }
+
+        private bool CanDoSpecial()
+        {
+            if (SpecialAbility == null) return false;
+
+            int chance = new Random().Next(1, 101);
+            return SpecialAbility.CanDoSpecial() && chance < 40;
         }
 
         private bool CanDoHeal() 
@@ -48,7 +63,7 @@ namespace AutoBattle.Characters
         {
             int heal = new Random().Next((int)healRange.X, (int)healRange.Y);
             Console.WriteLine($" - {Name} do healing");
-            Target.AddEffect(new Heal(heal));
+            AddEffect(new Heal(heal));
         }
 
         public override void DoAction()

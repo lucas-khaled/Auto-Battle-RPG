@@ -1,19 +1,18 @@
-﻿using AutoBattle.Abilities;
+﻿using AutoBattle.Characters;
 using AutoBattle.Effects;
 using AutoBattle.GameManagement;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoBattle.Characters.Behaviours.AttackBehaviours
+namespace AutoBattle.Abilities
 {
-    internal class InvisibilityAbility : ISpecialAbility
+    public class FrightenAbility : ISpecialAbility
     {
-        public string Name => "Hiding";
+        public string Name => "Fear Shout";
 
         private int turnsOfWaiting = 5;
         private int lastActivationTurn = 1;
-        private int turnsOfInvisibility = 2;
 
         public bool CanDoSpecial()
         {
@@ -24,9 +23,8 @@ namespace AutoBattle.Characters.Behaviours.AttackBehaviours
         {
             lastActivationTurn = GameManager.actualGame.Turn;
 
-            Console.WriteLine($" - {character.Name} used {Name}".ToUpper());
-
-            character.AddEffect(new Invisibility(turnsOfInvisibility));
+            Console.WriteLine($" - {character.Name} used {Name} on {character.Target.Name}".ToUpper());
+            character.Target.AddEffect(new Fear());
         }
     }
 }
