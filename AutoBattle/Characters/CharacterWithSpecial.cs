@@ -1,10 +1,10 @@
 ﻿using AutoBattle.GameManagement;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoBattle.Characters
 {
+    /// <summary>
+    /// Base for characters that behaves trying to do Special
+    /// </summary>
     public abstract class CharacterWithSpecial : Character
     {
         protected CharacterWithSpecial(string name) : base(name)
@@ -33,6 +33,10 @@ namespace AutoBattle.Characters
             TurnAction?.Invoke();
         }
 
+        /// <summary>
+        /// Determines if the character can use hiss special movement
+        /// </summary>
+        /// <returns>True when the character can use his special movement</returns>
         protected abstract bool CanDoSpecial();
     }
 }

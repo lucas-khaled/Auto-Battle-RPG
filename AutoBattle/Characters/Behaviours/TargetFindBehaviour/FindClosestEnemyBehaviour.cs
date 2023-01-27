@@ -1,12 +1,15 @@
 ﻿using AutoBattle.GameManagement;
+using AutoBattle.Grids;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static AutoBattle.Types;
 
 namespace AutoBattle.Characters.Behaviours.TargetFindBehaviour
 {
+    /// <summary>
+    /// Behaviour that will find the closest enemy from the character on actual game grid
+    /// </summary>
     public class FindClosestEnemyBehaviour : ITargetFindBehaviour
     {
         public void FindTarget(Character character)
