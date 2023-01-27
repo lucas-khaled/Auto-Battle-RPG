@@ -13,40 +13,41 @@ namespace AutoBattle.GameManagement
         public Grid Grid { get; private set; }
         public int Turn { get; private set; }
 
+        private GameGenerator generator = new GameGenerator();
         private List<Character> characters = new List<Character>();
-
+        private List<Team> teams;
         private bool started = false;
 
-        public Game(Grid grid, params Character[] characters) 
-        {
-            Grid = grid;
-            this.characters.AddRange(characters);
-        }
+        private const string PLAYER_TEAM_NAME = "Player Party";
+        private const string ENEMY_TEAM_NAME = "Bad Guys";
+        private const int TEAM_MEMBERS_QUANTITY = 2;
 
-        public void AddCharacter(Character character) 
+        public void AddCharacter(Character character, Team team) 
         {
+            character.Team = team;
             characters.Add(character);
             MoveObject(character, GetRandomFreePosInGrid());
         }
 
         public void StartGame() 
         {
-            started = true;
+            GameEvents.onCharacterDeath += OnCharacterDeath;
 
-            //characters.Sort();
-            PlaceCharacters(characters);
+            Grid = generator.GetGridChoice();
+            teams = generator.CreateTeams(PLAYER_TEAM_NAME, ENEMY_TEAM_NAME);
+
+            CreatePlayerTeam();
+            CreateEnemyTeam();
+
+            started = true;
+            characters.Shuffle();
         }
 
         public void EndGame() 
         {
-            var winningCharacter = characters.First(x => x.IsDead is false);
-            if (winningCharacter == null)
-            {
-                Console.WriteLine("\n\n         The game has ended and nobody won           ");
-                return;
-            }
-
-            Console.WriteLine($"\n\n         The game has ended and {winningCharacter.Name} won!           \n\n");
+            var winningTeam = characters.First(x => x.IsDead is false).Team;
+            Console.WriteLine($"\n\n         The game has ended and {winningTeam.Name} won!           \n\n");
+            GameEvents.onCharacterDeath -= OnCharacterDeath;
         }
 
         public void RunTurn() 
@@ -65,7 +66,8 @@ namespace AutoBattle.GameManagement
 
         public bool HasEnded() 
         {
-            return started && (characters.Count(x => x.IsDead is false) <= 1);
+            var teamsAlive = characters.Where(c => c.IsDead is false).Select(c => c.Team).GroupBy(team => team.ID).ToList();
+            return started && (teamsAlive.Count <= 1);
         }
 
         public void MoveObject(GridObject gridObject, GridBox box) 
@@ -90,22 +92,7 @@ namespace AutoBattle.GameManagement
             GameEvents.onObjectMoved?.Invoke(gridObject);
         }
 
-        private void PlaceCharacters(List<Character> characters) 
-        {
-            Console.WriteLine("\nPlacing Characters...");
-            characters.ForEach(character =>
-            {
-                Thread.Sleep(1000);
-
-                Console.WriteLine($"\nPlacing {character.Name}...");
-
-                Thread.Sleep(500);
-
-                MoveObject(character, GetRandomFreePosInGrid());
-            });
-        }
-
-        public GridBox GetRandomFreePosInGrid() 
+        public GridBox GetRandomFreePosInGrid()
         {
             var random = new Random();
             int x = random.Next(0, Grid.xLength);
@@ -113,10 +100,38 @@ namespace AutoBattle.GameManagement
 
             var box = Grid.GetBoxInPosition(x, y);
 
-            if (box.ocupiedBy != null) 
+            if (box.ocupiedBy != null)
                 return GetRandomFreePosInGrid();
 
             return box;
+        }
+
+        private void OnCharacterDeath(Character character) 
+        {
+            GridBox outOfMapBox = new GridBox(-1, -1, null, -1);
+            MoveObject(character, outOfMapBox);
+        }
+
+        private void CreatePlayerTeam() 
+        {
+            Console.WriteLine($"\n Creating {PLAYER_TEAM_NAME}\n\n");
+
+            Team playerTeam = teams.Find(x => x.Name == PLAYER_TEAM_NAME);
+
+            AddCharacter(generator.GetPlayerChoice(), playerTeam);
+
+            for(int i = 1; i< TEAM_MEMBERS_QUANTITY; i++) 
+                AddCharacter(generator.CreateNPC(), playerTeam);
+        }
+
+        private void CreateEnemyTeam()
+        {
+            Console.WriteLine($"\n Creating {ENEMY_TEAM_NAME}\n\n");
+
+            Team enemyTeam = teams.Find(x => x.Name == ENEMY_TEAM_NAME);
+
+            for (int i = 0; i < TEAM_MEMBERS_QUANTITY; i++)
+                AddCharacter(generator.CreateNPC(), enemyTeam);
         }
     }
 }

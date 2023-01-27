@@ -9,6 +9,7 @@ using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
 using System.Threading;
+using AutoBattle.GameManagement;
 
 namespace AutoBattle.Characters
 {
@@ -18,6 +19,7 @@ namespace AutoBattle.Characters
         public bool Visible { get; set; } = true;
         public int BaseDamage { get; set; }
 
+        public Team Team { get; set; }
         public Character Target { get; set; }
 
         public float Health { get; protected set; }
@@ -49,7 +51,7 @@ namespace AutoBattle.Characters
         public bool TakeDamage(float amount)
         {
             Health = Math.Clamp(Health -amount, 0, float.MaxValue);
-            Console.WriteLine($"    - {Name} took damage. Health is {Health}");
+            Console.WriteLine($"    - {Name} health is {Health}");
 
             if (Health <= 0)
             {
@@ -63,6 +65,7 @@ namespace AutoBattle.Characters
         {
             IsDead = true;
             Console.WriteLine($" {Name} HAS DIED!!");
+            GameEvents.onCharacterDeath?.Invoke(this);
         }
 
         public virtual void Move() 
@@ -82,6 +85,12 @@ namespace AutoBattle.Characters
 
         public void DoTurn() 
         {
+            if (IsDead) 
+            {
+                Console.WriteLine($"\n {Name} is Dead X(");
+                return;
+            }
+
             Console.WriteLine($"\n {Name}'s turn");
             HandleEffects();
             Thread.Sleep(500);

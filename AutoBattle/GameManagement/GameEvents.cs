@@ -8,5 +8,6 @@ namespace AutoBattle.GameManagement
     public static class GameEvents
     {
         public static Action<GridObject> onObjectMoved;
+        public static Action<Character> onCharacterDeath;
     }
 }

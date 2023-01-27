@@ -15,9 +15,9 @@ namespace AutoBattle
         public int yLength;
         public Grid(int Lines, int Columns)
         {
-            xLength = Lines;
-            yLength = Columns;
-            Console.WriteLine($"The battle field has been created as {xLength} X {yLength}\n");
+            xLength = Columns;
+            yLength = Lines;
+            Console.WriteLine($"\nThe battle field has been created as {xLength} X {yLength}\n");
             for (int y = 0; y < Lines; y++)
             {
                 for(int x = 0; x < Columns; x++)
@@ -30,7 +30,7 @@ namespace AutoBattle
 
         public void SetPosition(GridBox box) 
         {
-            if (box.Index < 0 || box.Index >= boxes.Count) return;
+            if (box.exists is false || box.Index >= boxes.Count) return;
 
             int index = box.Index;
             boxes[index] = box;
@@ -66,11 +66,11 @@ namespace AutoBattle
                     GridBox currentgrid = boxes[xLength * y + x];
                     if (currentgrid.ocupiedBy != null)
                     {
-                        Console.Write($"[{currentgrid.ocupiedBy.Name[0]}]\t");
+                        Console.Write($"[{currentgrid.ocupiedBy.Name.Substring(0,3)}]\t");
                     }
                     else
                     {
-                        Console.Write($"[ ]\t");
+                        Console.Write($"[   ]\t");
                     }
                 }
                 Console.Write(Environment.NewLine + Environment.NewLine);
