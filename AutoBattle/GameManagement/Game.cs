@@ -45,16 +45,8 @@ namespace AutoBattle.GameManagement
 
         public void EndGame() 
         {
-            var winningCharacter = characters.First(x => x.IsDead is false);
-            if (winningCharacter == null)
-            {
-                Console.WriteLine("\n\n         The game has ended and nobody won           ");
-                return;
-            }
-
-            Console.WriteLine($"\n\n         The game has ended and {winningCharacter.Name} won!           \n\n");
-
-
+            var winningTeam = characters.First(x => x.IsDead is false).Team;
+            Console.WriteLine($"\n\n         The game has ended and {winningTeam.Name} won!           \n\n");
             GameEvents.onCharacterDeath -= OnCharacterDeath;
         }
 
@@ -74,7 +66,8 @@ namespace AutoBattle.GameManagement
 
         public bool HasEnded() 
         {
-            return started && (characters.Count(x => x.IsDead is false) <= 1);
+            var teamsAlive = characters.Where(c => c.IsDead is false).Select(c => c.Team).GroupBy(team => team.ID).ToList();
+            return started && (teamsAlive.Count <= 1);
         }
 
         public void MoveObject(GridObject gridObject, GridBox box) 
