@@ -12,7 +12,7 @@ using System.Text;
 
 namespace AutoBattle.Characters
 {
-    internal class Cleric : Character
+    internal class Cleric : CharacterWithSpecial
     {
         private Vector2 healRange = new Vector2(5, 15);
 
@@ -29,22 +29,10 @@ namespace AutoBattle.Characters
                 return;
             }
 
-            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range)) 
-            {
-                if (CanDoSpecial())
-                {
-                    TurnAction = DoSpecial;
-                    return;
-                }
-
-                TurnAction = Attack;
-                return;
-            }
-
-            TurnAction = Move;
+            base.ChooseAction();
         }
 
-        private bool CanDoSpecial()
+        protected override bool CanDoSpecial()
         {
             if (SpecialAbility == null) return false;
 
@@ -64,11 +52,6 @@ namespace AutoBattle.Characters
             int heal = new Random().Next((int)healRange.X, (int)healRange.Y);
             Console.WriteLine($" - {Name} do healing");
             AddEffect(new Heal(heal));
-        }
-
-        public override void DoAction()
-        {
-            TurnAction?.Invoke();
         }
     }
 }

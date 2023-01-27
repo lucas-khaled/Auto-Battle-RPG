@@ -11,29 +11,12 @@ using System.Text;
 
 namespace AutoBattle.Characters
 {
-    internal class Warrior : Character
+    internal class Warrior : CharacterWithSpecial
     {
         private Vector2 bleedDamageRange = new Vector2(10, 20);
         public Warrior(string name) : base(name)
         {
             SetCharacterBasis(130, 20, new StrongAttackAbility(), new MoveTowardsTarget(1), new SimpleAttackBehaviour(3,1), new FindClosestEnemyBehaviour());
-        }
-
-        public override void ChooseAction()
-        {
-            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range))
-            {
-                if (CanDoSpecial())
-                {
-                    TurnAction = DoSpecial;
-                    return;
-                }
-
-                TurnAction = Attack;
-                return;
-            }
-
-            TurnAction = Move;
         }
 
         public override void Attack()
@@ -42,12 +25,7 @@ namespace AutoBattle.Characters
             TryDoBleed();
         }
 
-        public override void DoAction()
-        {
-            TurnAction?.Invoke();
-        }
-
-        private bool CanDoSpecial() 
+        protected override bool CanDoSpecial() 
         {
             if (SpecialAbility == null) return false;
 
