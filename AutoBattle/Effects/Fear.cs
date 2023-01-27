@@ -2,11 +2,12 @@
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoBattle.Effects
 {
+    /// <summary>
+    /// Effect that will make the specified character flee from closest target for one turn.
+    /// </summary>
     public class Fear : IEffect
     {
         private MoveAwayFromTarget moveAwayBehaviour;
