@@ -2,11 +2,12 @@
 using AutoBattle.Effects;
 using AutoBattle.GameManagement;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoBattle.Abilities
 {
+    /// <summary>
+    /// Special ability that adds <c>Fear</c> effect on the target
+    /// </summary>
     public class FrightenAbility : ISpecialAbility
     {
         public string Name => "Fear Shout";

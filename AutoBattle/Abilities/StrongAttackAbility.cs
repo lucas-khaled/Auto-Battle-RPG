@@ -1,12 +1,13 @@
 ﻿using AutoBattle.Characters;
 using AutoBattle.Effects;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace AutoBattle.Abilities
 {
+    /// <summary>
+    /// Special Ability that does double <c>BaseDamage</c> and also have the possibility of do <c>Bleed</c> and <c>Weakness</c> to a target.
+    /// </summary>
     public class StrongAttackAbility : ISpecialAbility
     {
         public string Name => "Huge Smash";
