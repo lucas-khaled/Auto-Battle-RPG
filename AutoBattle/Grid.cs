@@ -66,11 +66,11 @@ namespace AutoBattle
                     GridBox currentgrid = boxes[xLength * y + x];
                     if (currentgrid.ocupiedBy != null)
                     {
-                        Console.Write($"[{currentgrid.ocupiedBy.Name[0]}]\t");
+                        Console.Write($"[{currentgrid.ocupiedBy.Name.Substring(0,3)}]\t");
                     }
                     else
                     {
-                        Console.Write($"[ ]\t");
+                        Console.Write($"[   ]\t");
                     }
                 }
                 Console.Write(Environment.NewLine + Environment.NewLine);
