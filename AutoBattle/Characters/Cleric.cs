@@ -14,11 +14,11 @@ namespace AutoBattle.Characters
 {
     internal class Cleric : CharacterWithSpecial
     {
-        private Vector2 healRange = new Vector2(5, 15);
+        private Vector2 healRange = new Vector2(5,8);
 
         public Cleric(string name) : base(name)
         {
-            SetCharacterBasis(200, 8, new FrightenAbility(), new MoveTowardsTarget(1), new SimpleAttackBehaviour(0,1), new FindClosestEnemyBehaviour());
+            SetCharacterBasis(health: 150, baseDamage: 14, new FrightenAbility(), new MoveTowardsTarget(1), new SimpleAttackBehaviour(3,1), new FindClosestEnemyBehaviour());
         }
 
         public override void ChooseAction()

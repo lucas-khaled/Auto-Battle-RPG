@@ -11,7 +11,7 @@ namespace AutoBattle.Characters
     {
         public Archer(string name) : base(name)
         {
-            SetCharacterBasis(100, 12, new InvisibilityAbility(), new MoveTowardsTarget(2), new SimpleAttackBehaviour(6,2), new FindClosestEnemyBehaviour());
+            SetCharacterBasis(health: 100, baseDamage: 16, new InvisibilityAbility(), new MoveTowardsTarget(2), new SimpleAttackBehaviour(6,2), new FindClosestEnemyBehaviour());
         }
 
         protected override bool CanDoSpecial()

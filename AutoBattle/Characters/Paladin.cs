@@ -13,7 +13,7 @@ namespace AutoBattle.Characters
     {
         public Paladin(string name) : base(name)
         {
-            SetCharacterBasis(200, 10, new KnockDownAbility(), new MoveTowardsTarget(1), new RowAttackBehaviour(1,1, 3), new FindClosestEnemyBehaviour());
+            SetCharacterBasis(health: 130, baseDamage: 35, new KnockDownAbility(), new MoveTowardsTarget(1), new RowAttackBehaviour(2,1, 3), new FindClosestEnemyBehaviour());
         }
 
         protected override bool CanDoSpecial() 

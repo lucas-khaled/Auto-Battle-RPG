@@ -16,7 +16,7 @@ namespace AutoBattle.Characters
         private Vector2 bleedDamageRange = new Vector2(10, 20);
         public Warrior(string name) : base(name)
         {
-            SetCharacterBasis(130, 20, new StrongAttackAbility(), new MoveTowardsTarget(1), new SimpleAttackBehaviour(3,1), new FindClosestEnemyBehaviour());
+            SetCharacterBasis(health: 200, baseDamage: 30, new StrongAttackAbility(), new MoveTowardsTarget(1), new SimpleAttackBehaviour(3,1), new FindClosestEnemyBehaviour());
         }
 
         public override void Attack()
