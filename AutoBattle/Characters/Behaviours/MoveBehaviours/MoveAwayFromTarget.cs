@@ -1,4 +1,5 @@
 ﻿using AutoBattle.GameManagement;
+using AutoBattle.Grids;
 using System;
 using System.Collections.Generic;
 using System.Text;
