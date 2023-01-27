@@ -28,5 +28,10 @@ namespace AutoBattle.Grids
         {
             return currentBox;
         }
+
+        public void SetCurrentPlace(GridBox currentBox) 
+        {
+            this.currentBox = currentBox;
+        }
     }
 }

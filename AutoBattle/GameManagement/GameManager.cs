@@ -6,10 +6,19 @@ using System.Threading;
 
 namespace AutoBattle.GameManagement
 {
+    /// <summary>
+    /// Does the control and runs games
+    /// </summary>
     public static class GameManager
     {
+        /// <summary>
+        /// The actual <c>Game</c> that is running
+        /// </summary>
         public static Game actualGame { get; private set; }
 
+        /// <summary>
+        /// Starts and run a new game
+        /// </summary>
         public static void StartNewGame() 
         {
             actualGame = new Game();
@@ -22,7 +31,7 @@ namespace AutoBattle.GameManagement
             Console.WriteLine("Press any key for start!");
             Console.ReadKey();
 
-            while (game.HasEnded() is false) 
+            while (game.CanEnd() is false) 
             {
                 game.RunTurn();
                 Console.WriteLine("\n Press any key for next Turn\n");

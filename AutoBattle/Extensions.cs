@@ -6,6 +6,9 @@ namespace AutoBattle
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Randomly shuffles a List
+        /// </summary>
         public static void Shuffle<T>(this List<T> list)
         {
             int elements = list.Count;
