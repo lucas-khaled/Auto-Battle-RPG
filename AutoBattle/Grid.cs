@@ -15,8 +15,8 @@ namespace AutoBattle
         public int yLength;
         public Grid(int Lines, int Columns)
         {
-            xLength = Lines;
-            yLength = Columns;
+            xLength = Columns;
+            yLength = Lines;
             Console.WriteLine($"\nThe battle field has been created as {xLength} X {yLength}\n");
             for (int y = 0; y < Lines; y++)
             {
@@ -30,7 +30,7 @@ namespace AutoBattle
 
         public void SetPosition(GridBox box) 
         {
-            if (box.Index < 0 || box.Index >= boxes.Count) return;
+            if (box.exists is false || box.Index >= boxes.Count) return;
 
             int index = box.Index;
             boxes[index] = box;
