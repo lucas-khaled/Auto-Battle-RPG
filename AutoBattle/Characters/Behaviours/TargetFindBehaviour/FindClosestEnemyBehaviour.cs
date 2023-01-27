@@ -29,7 +29,7 @@ namespace AutoBattle.Characters.Behaviours.TargetFindBehaviour
 
         private bool DoesPlaceFits(GridBox box, Character character) 
         {
-            return box.ocupiedBy is Character target && target.Visible && target.Team.ID != character.Team.ID;
+            return box.ocupiedBy is Character target && target.Visible && target.IsDead is false && target.Team.ID != character.Team.ID;
         }
     }
 }

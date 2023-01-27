@@ -31,6 +31,8 @@ namespace AutoBattle.GameManagement
 
         public void StartGame() 
         {
+            GameEvents.onCharacterDeath += OnCharacterDeath;
+
             Grid = generator.GetGridChoice();
             teams = generator.CreateTeams(PLAYER_TEAM_NAME, ENEMY_TEAM_NAME);
 
@@ -51,6 +53,9 @@ namespace AutoBattle.GameManagement
             }
 
             Console.WriteLine($"\n\n         The game has ended and {winningCharacter.Name} won!           \n\n");
+
+
+            GameEvents.onCharacterDeath -= OnCharacterDeath;
         }
 
         public void RunTurn() 
@@ -94,21 +99,6 @@ namespace AutoBattle.GameManagement
             GameEvents.onObjectMoved?.Invoke(gridObject);
         }
 
-        private void PlaceCharacters(List<Character> characters) 
-        {
-            Console.WriteLine("\nPlacing Characters...");
-            characters.ForEach(character =>
-            {
-                Thread.Sleep(1000);
-
-                Console.WriteLine($"\nPlacing {character.Name}...");
-
-                Thread.Sleep(500);
-
-                MoveObject(character, GetRandomFreePosInGrid());
-            });
-        }
-
         public GridBox GetRandomFreePosInGrid()
         {
             var random = new Random();
@@ -121,6 +111,12 @@ namespace AutoBattle.GameManagement
                 return GetRandomFreePosInGrid();
 
             return box;
+        }
+
+        private void OnCharacterDeath(Character character) 
+        {
+            GridBox outOfMapBox = new GridBox(-1, -1, null, -1);
+            MoveObject(character, outOfMapBox);
         }
 
         private void CreatePlayerTeam() 

@@ -21,6 +21,7 @@ namespace AutoBattle
             public int yIndex;
             public GridObject ocupiedBy;
             public int Index;
+            public bool exists;
 
             public GridBox(int x, int y, GridObject ocupiedBy, int index)
             {
@@ -28,6 +29,7 @@ namespace AutoBattle
                 yIndex = y;
                 this.ocupiedBy = ocupiedBy;
                 this.Index = index;
+                exists = x>=0 && y>=0 && index>=0;
             }
 
             public override string ToString()
