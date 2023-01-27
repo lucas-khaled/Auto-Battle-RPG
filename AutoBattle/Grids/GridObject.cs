@@ -1,10 +1,4 @@
-﻿using AutoBattle.GameManagement;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static AutoBattle.Types;
-
-namespace AutoBattle.Grids
+﻿namespace AutoBattle.Grids
 {
     /// <summary>
     /// Base class to represent objects that can be inside a <c>Grid</c>
