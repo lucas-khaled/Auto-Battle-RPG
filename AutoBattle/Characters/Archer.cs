@@ -7,41 +7,19 @@ using System;
 
 namespace AutoBattle.Characters
 {
-    internal class Archer : Character
+    internal class Archer : CharacterWithSpecial
     {
         public Archer(string name) : base(name)
         {
-            SetCharacterBasis(100, 12, new InvisibilityAbility(), new MoveTowardsTarget(2), new SimpleAttackBehaviour(6,2), new FindClosestEnemyBehaviour());
+            SetCharacterBasis(health: 100, baseDamage: 16, new InvisibilityAbility(), new MoveTowardsTarget(2), new SimpleAttackBehaviour(6,2), new FindClosestEnemyBehaviour());
         }
 
-        public override void ChooseAction()
-        {
-            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range))
-            {
-                if (CanDoSpecial())
-                {
-                    TurnAction = DoSpecial;
-                    return;
-                }
-
-                TurnAction = Attack;
-                return;
-            }
-
-            TurnAction = Move;
-        }
-
-        private bool CanDoSpecial()
+        protected override bool CanDoSpecial()
         {
             if (SpecialAbility == null) return false;
 
             int chance = new Random().Next(1, 101);
             return SpecialAbility.CanDoSpecial() && Health < 50 || chance < 30;
-        }
-
-        public override void DoAction()
-        {
-            TurnAction?.Invoke();
         }
     }
 }

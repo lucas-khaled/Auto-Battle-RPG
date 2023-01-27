@@ -1,11 +1,11 @@
-﻿using AutoBattle.GameManagement;
-using System;
+﻿using AutoBattle.Grids;
 using System.Collections.Generic;
-using System.Text;
-using static AutoBattle.Types;
 
 namespace AutoBattle.Characters.Behaviours.MoveBehaviours
 {
+    /// <summary>
+    /// Moves away the target of the given <c>Character</c>.
+    /// </summary>
     public class MoveAwayFromTarget : TargetOrientedMoveBehaviour
     {
         private float distance = 0;

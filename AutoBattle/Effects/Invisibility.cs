@@ -1,15 +1,17 @@
 ﻿using AutoBattle.Characters;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoBattle.Effects
 {
+    /// <summary>
+    /// Effect that makes a character not visible for others during a certain time
+    /// </summary>
     public class Invisibility : IEffect
     {
         private int turnsRemaining;
         private bool reseted = false;
 
+        /// <param name="turns">Number of turns that the effect will last.</param>
         public Invisibility(int turns) 
         {
             this.turnsRemaining = turns;
@@ -34,7 +36,7 @@ namespace AutoBattle.Effects
             return reseted;
         }
 
-        public void ResetEffect(Character character)
+        private void ResetEffect(Character character)
         {
             character.Visible = true;
             Console.WriteLine($" - {character.Name} is now visible!");

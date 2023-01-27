@@ -1,5 +1,5 @@
 ﻿using System;
-using static AutoBattle.Grid;
+using static AutoBattle.Grids.Grid;
 using System.Collections.Generic;
 using System.Linq;
 using static AutoBattle.Types;

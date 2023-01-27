@@ -1,10 +1,11 @@
 ﻿using AutoBattle.Characters;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoBattle.Effects
 {
+    /// <summary>
+    /// Effect that will heal the character once.
+    /// </summary>
     public class Heal : IEffect
     {
         private bool applied = false;

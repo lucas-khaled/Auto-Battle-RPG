@@ -7,6 +7,9 @@ using System.Text;
 
 namespace AutoBattle.Abilities
 {
+    /// <summary>
+    /// Special ability that will add <c>Invisibility</c> to the given <c>Character</c>
+    /// </summary>
     public class InvisibilityAbility : ISpecialAbility
     {
         public string Name => "Hiding";

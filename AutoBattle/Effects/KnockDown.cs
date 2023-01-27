@@ -1,12 +1,12 @@
 ﻿using AutoBattle.Characters;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace AutoBattle.Effects
 {
-    internal class KnockDown : IEffect
+    /// <summary>
+    /// Effect that will block that character from acting this turn
+    /// </summary>
+    public class KnockDown : IEffect
     {
         public bool applied = false;
         public bool reseted = false;

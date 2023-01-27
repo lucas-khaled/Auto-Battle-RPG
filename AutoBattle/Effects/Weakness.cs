@@ -1,10 +1,11 @@
 ﻿using AutoBattle.Characters;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoBattle.Effects
 {
+    /// <summary>
+    /// Effect that will reduce the <c>BaseDamage</c> of a character.
+    /// </summary>
+    /// <remarks> The <c>BaseDamage</c>c> will be awayas a minimum of 0. It will not become less than that.</remarks>
     public class Weakness : IEffect
     {
         private int turnsRemaining;
@@ -12,6 +13,8 @@ namespace AutoBattle.Effects
         private bool applied = false;
         private bool reseted = false;
 
+        /// <param name="turns">Number of turns that the effect will last.</param>
+        /// <param name="amount">Amount of reducing of damage.</param>
         public Weakness(int turns, int amount) 
         {
             this.turnsRemaining = turns;

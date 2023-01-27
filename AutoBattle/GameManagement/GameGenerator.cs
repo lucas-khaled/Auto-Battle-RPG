@@ -2,11 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static AutoBattle.Types;
 using System.Threading;
+using AutoBattle.Grids;
 
 namespace AutoBattle.GameManagement
 {
+    /// <summary>
+    /// Contains useful methods that generates stuff or the game.
+    /// </summary>
     public class GameGenerator
     {
         private const int MIN_GRID_SIZE = 4;
@@ -19,6 +22,10 @@ namespace AutoBattle.GameManagement
                 "Tássia Chando", "Jusepa", "Baby Shark", "DovahKiin", "Kratos", "Your mom"
             };
 
+        /// <summary>
+        /// Asks and grabs player's input and convert it to a <c>Grid</c>.
+        /// </summary>
+        /// <returns>The <c>Grid</c> that represents the choice of the player.</returns>
         public Grid GetGridChoice()
         {
             Console.Write("\nWrite the x size of the battlefield : ");
@@ -30,7 +37,11 @@ namespace AutoBattle.GameManagement
             return new Grid(x, y);
         }
 
-        public Character GetPlayerChoice()
+        /// <summary>
+        /// Asks and grabs player's input and convert it to a <c>Character</c>.
+        /// </summary>
+        /// <returns>The <c>Character</c> based on the class choice of the player.</returns>
+        public Character GetPlayerCharacterChoice()
         {
             Console.WriteLine("Choose Between One of this Classes:\n");
             Console.Write("[1] Paladin, [2] Warrior, [3] Cleric, [4] Archer    ");
@@ -44,6 +55,11 @@ namespace AutoBattle.GameManagement
             return CharacterFactory.GenerateCharacter(characterClass, "Player");
         }
 
+        /// <summary>
+        /// Creates a NPC with the given name and a random class.
+        /// </summary>
+        /// <param name="name">Name of the created NPC</param>
+        /// <returns>A <c>Character</c> with a random class.</returns>
         public Character CreateNPC(string name)
         {
             Thread.Sleep(1000);
@@ -59,6 +75,10 @@ namespace AutoBattle.GameManagement
             return CharacterFactory.GenerateCharacter(npcClass, name);
         }
 
+        /// <summary>
+        /// Creates a NPC with a random name and a random class.
+        /// </summary>
+        /// <returns>A <c>Character</c> with random class and name.</returns>
         public Character CreateNPC() 
         {
             string name = randomNames[new Random().Next(0, randomNames.Count)];
@@ -66,6 +86,11 @@ namespace AutoBattle.GameManagement
             return CreateNPC(name);
         }
 
+        /// <summary>
+        /// Create <c>Team</c>s with the given names.
+        /// </summary>
+        /// <param name="names">Names of the teams. The list will be sized based on the quantity of given names.</param>
+        /// <returns>Returns a list of the size of the given names</returns>
         public List<Team> CreateTeams(params string[] names) 
         {
             List<Team> teams = new List<Team>();

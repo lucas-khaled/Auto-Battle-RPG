@@ -1,5 +1,8 @@
 ﻿namespace AutoBattle.GameManagement
 {
+    /// <summary>
+    /// Represents a Team with a name and ID
+    /// </summary>
     public struct Team
     {
         public int ID;

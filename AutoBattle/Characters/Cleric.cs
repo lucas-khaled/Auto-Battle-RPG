@@ -3,22 +3,19 @@ using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
 using AutoBattle.Effects;
-using AutoBattle.GameManagement;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
 
 namespace AutoBattle.Characters
 {
-    internal class Cleric : Character
+    internal class Cleric : CharacterWithSpecial
     {
-        private Vector2 healRange = new Vector2(5, 15);
+        private Vector2 healRange = new Vector2(5,8);
 
         public Cleric(string name) : base(name)
         {
-            SetCharacterBasis(200, 8, new FrightenAbility(), new MoveTowardsTarget(1), new SimpleAttackBehaviour(0,1), new FindClosestEnemyBehaviour());
+            SetCharacterBasis(health: 150, baseDamage: 14, new FrightenAbility(), new MoveTowardsTarget(1), new SimpleAttackBehaviour(3,1), new FindClosestEnemyBehaviour());
         }
 
         public override void ChooseAction()
@@ -29,22 +26,10 @@ namespace AutoBattle.Characters
                 return;
             }
 
-            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range)) 
-            {
-                if (CanDoSpecial())
-                {
-                    TurnAction = DoSpecial;
-                    return;
-                }
-
-                TurnAction = Attack;
-                return;
-            }
-
-            TurnAction = Move;
+            base.ChooseAction();
         }
 
-        private bool CanDoSpecial()
+        protected override bool CanDoSpecial()
         {
             if (SpecialAbility == null) return false;
 
@@ -64,11 +49,6 @@ namespace AutoBattle.Characters
             int heal = new Random().Next((int)healRange.X, (int)healRange.Y);
             Console.WriteLine($" - {Name} do healing");
             AddEffect(new Heal(heal));
-        }
-
-        public override void DoAction()
-        {
-            TurnAction?.Invoke();
         }
     }
 }

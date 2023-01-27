@@ -4,7 +4,10 @@ using System.Text;
 
 namespace AutoBattle.Characters.Behaviours.AttackBehaviours
 {
-    internal class RowAttackBehaviour : IAttackBehaviour
+    /// <summary>
+    /// Row attacks in a single turn
+    /// </summary>
+    public class RowAttackBehaviour : IAttackBehaviour
     {
         public int Range { get; }
 
@@ -12,6 +15,9 @@ namespace AutoBattle.Characters.Behaviours.AttackBehaviours
         private int steps;
         private Random random = new Random();
 
+        /// <param name="variation">The randomly choosed variation of the character's <c>BaseDamage</c></param>
+        /// <param name="range">The range position of the attack</param>
+        /// <param name="steps">The quantity of attacks will be done. Each step will do a divided amount of the <c>BaseDamage</c></param>
         public RowAttackBehaviour(int variation, int range, int steps)
         {
             Range = range;

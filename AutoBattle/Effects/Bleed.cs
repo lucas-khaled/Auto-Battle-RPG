@@ -1,11 +1,12 @@
 ﻿using AutoBattle.Characters;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace AutoBattle.Effects
 {
+    /// <summary>
+    /// Effect that adds damage on a character during certain time.
+    /// </summary>
     public class Bleed : IEffect
     {
         private int turnsRemaining;
@@ -14,6 +15,8 @@ namespace AutoBattle.Effects
 
         private bool reseted = false;
 
+        /// <param name="turns">Number of turns that the effect will last.</param>
+        /// <param name="damageRange">Possible range of damage the character can take from this effect.</param>
         public Bleed(int turns, Vector2 damageRange) 
         {
             this.turnsRemaining = turns;

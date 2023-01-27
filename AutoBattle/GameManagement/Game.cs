@@ -1,16 +1,26 @@
 ﻿using AutoBattle.Characters;
+using AutoBattle.Grids;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using static AutoBattle.Types;
 
 namespace AutoBattle.GameManagement
 {
+    /// <summary>
+    /// Runs and manage the logic for a game.
+    /// </summary>
     public class Game
     {
+        /// <summary>
+        /// The actual game. <c>Grid</c>
+        /// </summary>
         public Grid Grid { get; private set; }
+
+        /// <summary>
+        /// The actual game turn. It will be incremented after each turn has passed.
+        /// </summary>
         public int Turn { get; private set; }
 
         private GameGenerator generator = new GameGenerator();
@@ -22,6 +32,11 @@ namespace AutoBattle.GameManagement
         private const string ENEMY_TEAM_NAME = "Bad Guys";
         private const int TEAM_MEMBERS_QUANTITY = 2;
 
+        /// <summary>
+        /// Adds a new character to this game.
+        /// </summary>
+        /// <param name="character">The character that will be added.</param>
+        /// <param name="team">The character's team he will be associated.</param>
         public void AddCharacter(Character character, Team team) 
         {
             character.Team = team;
@@ -29,6 +44,9 @@ namespace AutoBattle.GameManagement
             MoveObject(character, GetRandomFreePosInGrid());
         }
 
+        /// <summary>
+        /// Setups the game so it can start.
+        /// </summary>
         public void StartGame() 
         {
             GameEvents.onCharacterDeath += OnCharacterDeath;
@@ -43,6 +61,9 @@ namespace AutoBattle.GameManagement
             characters.Shuffle();
         }
 
+        /// <summary>
+        /// Ends the game and do whatever is necessary on it's end.
+        /// </summary>
         public void EndGame() 
         {
             var winningTeam = characters.First(x => x.IsDead is false).Team;
@@ -50,6 +71,9 @@ namespace AutoBattle.GameManagement
             GameEvents.onCharacterDeath -= OnCharacterDeath;
         }
 
+        /// <summary>
+        /// Run the next turn of the game and make all characters do their turns to.
+        /// </summary>
         public void RunTurn() 
         {
             if (started is false) return;
@@ -64,12 +88,20 @@ namespace AutoBattle.GameManagement
                 
         }
 
-        public bool HasEnded() 
+        /// <summary>
+        /// Says if the game has the condition to end or not
+        /// </summary>
+        /// <returns>If the can be finished</returns>
+        public bool CanEnd() 
         {
             var teamsAlive = characters.Where(c => c.IsDead is false).Select(c => c.Team).GroupBy(team => team.ID).ToList();
             return started && (teamsAlive.Count <= 1);
         }
 
+        /// <summary>
+        /// Says if the game has the condition to end or not
+        /// </summary>
+        /// <returns>If the can be finished</returns>
         public void MoveObject(GridObject gridObject, GridBox box) 
         {
             if (box.ocupiedBy != null)
@@ -78,7 +110,7 @@ namespace AutoBattle.GameManagement
                 return;
             }
 
-            GridBox currentBox = gridObject.currentBox;
+            GridBox currentBox = gridObject.GetCurrentPlace();
             currentBox.ocupiedBy = null;
 
             box.ocupiedBy = gridObject;
@@ -87,11 +119,14 @@ namespace AutoBattle.GameManagement
             Grid.SetPosition(currentBox);
             Grid.DrawBattlefield();
 
-            gridObject.currentBox = box;
+            gridObject.SetCurrentPlace(box);
 
             GameEvents.onObjectMoved?.Invoke(gridObject);
         }
 
+        /// <summary>
+        /// Gets a random position in actual grid that is not occupied.
+        /// </summary>
         public GridBox GetRandomFreePosInGrid()
         {
             var random = new Random();
@@ -118,7 +153,7 @@ namespace AutoBattle.GameManagement
 
             Team playerTeam = teams.Find(x => x.Name == PLAYER_TEAM_NAME);
 
-            AddCharacter(generator.GetPlayerChoice(), playerTeam);
+            AddCharacter(generator.GetPlayerCharacterChoice(), playerTeam);
 
             for(int i = 1; i< TEAM_MEMBERS_QUANTITY; i++) 
                 AddCharacter(generator.CreateNPC(), playerTeam);

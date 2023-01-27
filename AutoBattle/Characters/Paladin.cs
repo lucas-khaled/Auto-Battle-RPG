@@ -2,48 +2,23 @@
 using AutoBattle.Characters.Behaviours.AttackBehaviours;
 using AutoBattle.Characters.Behaviours.MoveBehaviours;
 using AutoBattle.Characters.Behaviours.TargetFindBehaviour;
-using AutoBattle.GameManagement;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoBattle.Characters
 {
-    internal class Paladin : Character
+    internal class Paladin : CharacterWithSpecial
     {
         public Paladin(string name) : base(name)
         {
-            SetCharacterBasis(200, 10, new KnockDownAbility(), new MoveTowardsTarget(1), new RowAttackBehaviour(1,1, 3), new FindClosestEnemyBehaviour());
+            SetCharacterBasis(health: 130, baseDamage: 35, new KnockDownAbility(), new MoveTowardsTarget(1), new RowAttackBehaviour(2,1, 3), new FindClosestEnemyBehaviour());
         }
 
-        public override void ChooseAction()
-        {
-            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range))
-            {
-                if (CanDoSpecial())
-                {
-                    TurnAction = DoSpecial;
-                    return;
-                }
-
-                TurnAction = Attack;
-                return;
-            }
-
-            TurnAction = Move;
-        }
-
-        private bool CanDoSpecial() 
+        protected override bool CanDoSpecial() 
         {
             if (SpecialAbility == null) return false;
 
             int chance = new Random().Next(1, 101);
             return SpecialAbility.CanDoSpecial() && chance < 40;
-        }
-
-        public override void DoAction()
-        {
-            TurnAction?.Invoke();
         }
     }
 }
