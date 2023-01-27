@@ -12,7 +12,7 @@ namespace AutoBattle.GameManagement
         private const int MIN_GRID_SIZE = 4;
         private const int MAX_GRID_SIZE = 15;
 
-        private string[] randomNames =
+        private List<string> randomNames = new List<string>
             {
                 "Jão", "Robervaldo", "Grória", "Ronaldinho Gaúcho", "Dumb John",
                 "Mighty One", "Jalim Rabei", "Cuca Beludo", "Gh0st Kn1g4t 666", "System of a Down",
@@ -61,7 +61,8 @@ namespace AutoBattle.GameManagement
 
         public Character CreateNPC() 
         {
-            string name = randomNames[new Random().Next(0, randomNames.Length)];
+            string name = randomNames[new Random().Next(0, randomNames.Count)];
+            randomNames.Remove(name);
             return CreateNPC(name);
         }
 

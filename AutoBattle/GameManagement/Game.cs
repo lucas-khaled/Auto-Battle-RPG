@@ -20,7 +20,7 @@ namespace AutoBattle.GameManagement
 
         private const string PLAYER_TEAM_NAME = "Player Party";
         private const string ENEMY_TEAM_NAME = "Bad Guys";
-        private const int TEAM_MEMBERS_QUANTITY = 3;
+        private const int TEAM_MEMBERS_QUANTITY = 2;
 
         public void AddCharacter(Character character, Team team) 
         {

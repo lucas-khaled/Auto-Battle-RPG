@@ -10,7 +10,7 @@ namespace AutoBattle.Effects
     public class Fear : IEffect
     {
         private MoveAwayFromTarget moveAwayBehaviour;
-        private FindClosestTargetBehaviour closestTargetBehaviour;
+        private FindClosestEnemyBehaviour closestTargetBehaviour;
         private bool applied = false;
         private bool reset = false;
 
@@ -20,7 +20,7 @@ namespace AutoBattle.Effects
                 moveAwayBehaviour = new MoveAwayFromTarget(character.MoveBehaviour.MoveRange);
 
             if (closestTargetBehaviour == null)
-                closestTargetBehaviour = new FindClosestTargetBehaviour();
+                closestTargetBehaviour = new FindClosestEnemyBehaviour();
 
             if (applied)
             {
