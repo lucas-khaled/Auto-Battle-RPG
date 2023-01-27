@@ -13,24 +13,29 @@ namespace AutoBattle.GameManagement
         public Grid Grid { get; private set; }
         public int Turn { get; private set; }
 
+        private GameGenerator generator = new GameGenerator();
         private List<Character> characters = new List<Character>();
+        private List<Team> teams;
         private bool started = false;
 
-        private const int MIN_GRID_SIZE = 4;
-        private const int MAX_GRID_SIZE = 15;
+        private const string PLAYER_TEAM_NAME = "Player Party";
+        private const string ENEMY_TEAM_NAME = "Bad Guys";
+        private const int TEAM_MEMBERS_QUANTITY = 3;
 
-        public void AddCharacter(Character character) 
+        public void AddCharacter(Character character, Team team) 
         {
+            character.Team = team;
             characters.Add(character);
             MoveObject(character, GetRandomFreePosInGrid());
         }
 
         public void StartGame() 
         {
-            Grid = GetGridChoice();
+            Grid = generator.GetGridChoice();
+            teams = generator.CreateTeams(PLAYER_TEAM_NAME, ENEMY_TEAM_NAME);
 
-            AddCharacter(GetPlayerChoice());
-            AddCharacter(CreateEnemyCharacter());
+            CreatePlayerTeam();
+            CreateEnemyTeam();
 
             started = true;
             characters.Shuffle();
@@ -118,44 +123,26 @@ namespace AutoBattle.GameManagement
             return box;
         }
 
-        private Grid GetGridChoice() 
+        private void CreatePlayerTeam() 
         {
-            Console.Write("\nWrite the x size of the battlefield : ");
-            int x = Math.Clamp(int.Parse(Console.ReadLine()), MIN_GRID_SIZE, MAX_GRID_SIZE);
+            Console.WriteLine($"\n Creating {PLAYER_TEAM_NAME}\n\n");
 
-            Console.Write("\nWrite the y size of the battlefield : ");
-            int y = Math.Clamp(int.Parse(Console.ReadLine()), MIN_GRID_SIZE, MAX_GRID_SIZE);
+            Team playerTeam = teams.Find(x => x.Name == PLAYER_TEAM_NAME);
 
-            return new Grid(x, y);
+            AddCharacter(generator.GetPlayerChoice(), playerTeam);
+
+            for(int i = 1; i< TEAM_MEMBERS_QUANTITY; i++) 
+                AddCharacter(generator.CreateNPC(), playerTeam);
         }
 
-        private Character GetPlayerChoice()
+        private void CreateEnemyTeam()
         {
-            Console.WriteLine("Choose Between One of this Classes:\n");
-            Console.Write("[1] Paladin, [2] Warrior, [3] Cleric, [4] Archer    ");
+            Console.WriteLine($"\n Creating {ENEMY_TEAM_NAME}\n\n");
 
-            string choice = Console.ReadLine();
-            CharacterClass characterClass = (CharacterClass)int.Parse(choice);
+            Team enemyTeam = teams.Find(x => x.Name == ENEMY_TEAM_NAME);
 
-            Thread.Sleep(500);
-            Console.WriteLine($"Your class Choice: {characterClass}");
-
-            return CharacterFactory.GenerateCharacter(characterClass, "Player");
-        }
-
-        private Character CreateEnemyCharacter()
-        {
-            Thread.Sleep(500);
-
-            var rand = new Random();
-            int randomInteger = rand.Next(1, 4);
-
-            CharacterClass enemyClass = (CharacterClass)randomInteger;
-            Console.WriteLine($"\nEnemy Class Choice: {enemyClass}");
-
-            Thread.Sleep(500);
-
-            return CharacterFactory.GenerateCharacter(enemyClass, "Enemy");
+            for (int i = 0; i < TEAM_MEMBERS_QUANTITY; i++)
+                AddCharacter(generator.CreateNPC(), enemyTeam);
         }
     }
 }
