@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using static AutoBattle.Types;
 using System.Threading;
+using AutoBattle.Grids;
 
 namespace AutoBattle.GameManagement
 {

@@ -1,4 +1,5 @@
 ﻿using AutoBattle.GameManagement;
+using AutoBattle.Grids;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,7 +38,7 @@ namespace AutoBattle.Characters.Behaviours.MoveBehaviours
 
             GameManager.actualGame.MoveObject(character, newPosition);
 
-            Console.WriteLine($"{character.Name} moved to {character.currentBox.ToString()}");
+            Console.WriteLine($"{character.Name} moved to {character.GetCurrentPlace().ToString()}");
         }
 
         protected virtual List<GridBox> EvaluateMovementPossibilities(GridBox position, GridBox targetPosition, Grid grid)
@@ -48,12 +49,12 @@ namespace AutoBattle.Characters.Behaviours.MoveBehaviours
 
             for (int x = -MoveRange; x <= MoveRange; x++)
             {
-                var newX = position.xIndex + x;
+                var newX = position.X + x;
                 if (newX < 0 || newX >= grid.xLength) continue;
 
                 for (int y = -MoveRange; y <= MoveRange; y++)
                 {
-                    var newY = position.yIndex + y;
+                    var newY = position.Y + y;
                     if (newY < 0 || newY >= grid.yLength) continue;
 
                     var newBox = grid.GetBoxInPosition(newX, newY);

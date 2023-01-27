@@ -13,7 +13,7 @@ namespace AutoBattle.Characters
 
         public override void ChooseAction() 
         {
-            if (Target != null && GameManager.actualGame.Grid.IsInRange(currentBox, Target.currentBox, AttackBehaviour.Range))
+            if (Target != null && GameManager.actualGame.Grid.IsInRange(GetCurrentPlace(), Target.GetCurrentPlace(), AttackBehaviour.Range))
             {
                 if (CanDoSpecial())
                 {

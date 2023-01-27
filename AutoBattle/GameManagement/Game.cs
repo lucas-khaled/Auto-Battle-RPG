@@ -1,4 +1,5 @@
 ﻿using AutoBattle.Characters;
+using AutoBattle.Grids;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,7 +79,7 @@ namespace AutoBattle.GameManagement
                 return;
             }
 
-            GridBox currentBox = gridObject.currentBox;
+            GridBox currentBox = gridObject.GetCurrentPlace();
             currentBox.ocupiedBy = null;
 
             box.ocupiedBy = gridObject;
@@ -87,7 +88,7 @@ namespace AutoBattle.GameManagement
             Grid.SetPosition(currentBox);
             Grid.DrawBattlefield();
 
-            gridObject.currentBox = box;
+            gridObject.GetCurrentPlace() = box;
 
             GameEvents.onObjectMoved?.Invoke(gridObject);
         }
